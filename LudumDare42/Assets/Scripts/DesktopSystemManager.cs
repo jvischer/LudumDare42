@@ -32,4 +32,10 @@ public class DesktopSystemManager : MonoBehaviour {
         }
     }
 
+    //private void Update() {
+    //    if (Input.GetKeyDown(KeyCode.LeftWindows) || Input.GetKeyDown(KeyCode.RightWindows)) {
+    //        // TODO: Alternate way to click the start button IF necessary
+    //    }
+    //}
+
 }

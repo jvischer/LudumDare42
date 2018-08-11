@@ -6,6 +6,7 @@ public class DropdownController : MonoBehaviour {
 
     public static DropdownController DC;
 
+    [SerializeField] private GameObject _bottomBarCover;
     [SerializeField] private RectTransform _dropdownRoot;
     [SerializeField] private DropdownOptionController[] _dropdownOptionPool;
 
@@ -33,11 +34,15 @@ public class DropdownController : MonoBehaviour {
             }
         }
 
+        _bottomBarCover.SetActive(true);
+
         _dropdownRoot.position = file.transform.position;
         _dropdownRoot.gameObject.SetActive(true);
     }
 
     public void hideDropdown() {
+        _bottomBarCover.SetActive(false);
+
         _dropdownRoot.gameObject.SetActive(false);
     }
 

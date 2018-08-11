@@ -25,6 +25,9 @@ public class FileController : MonoBehaviour {
     private FileAction _queuedAction = FileAction.Idle;
     private bool _isSelected = false;
 
+    private bool _isFollowingMouse = false;
+    private Vector3 _posBeforeFollowingMouse;
+
     private void Awake() {
         _animator = gameObject.GetComponent<Animator>();
     }
@@ -38,6 +41,10 @@ public class FileController : MonoBehaviour {
     }
 
     private void Update() {
+        if (_isFollowingMouse) {
+            transform.position = Input.mousePosition;
+        }
+
         switch (_queuedAction) {
             case FileAction.Select:
                 if (!_isSelected) {
@@ -91,9 +98,9 @@ public class FileController : MonoBehaviour {
     }
 
     public void clickFile(BaseEventData baseEventData) {
-        DropdownController.DC.hideDropdown();
-
         PointerEventData pointerEventData = baseEventData as PointerEventData;
+
+        DropdownController.DC.hideDropdown();
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
             // Handle lmb
             if (lastClickedFile == fileID) {
@@ -104,6 +111,8 @@ public class FileController : MonoBehaviour {
                 FileSystemManager.FSM.deselectLastClickedFile();
                 lastClickedFile = fileID;
             }
+
+            DragController.DC.startSelectionFollowingMouse();
         } else if (pointerEventData.button == PointerEventData.InputButton.Right) {
             // Handle rmb
             if (lastClickedFile != fileID) {
@@ -114,6 +123,45 @@ public class FileController : MonoBehaviour {
 
             // Open right click options relative to the file based on the file's data
             DropdownController.DC.displayDropdownForFile(this);
+        }
+    }
+
+    public void releaseFile(BaseEventData baseEventData) {
+        PointerEventData pointerEventData = baseEventData as PointerEventData;
+
+        if (pointerEventData.button == PointerEventData.InputButton.Left) {
+            Vector3 pointerDelta = pointerEventData.position - pointerEventData.pressPosition;
+            Debug.Log("Delta is " + pointerDelta + " w/ len " + pointerDelta.sqrMagnitude);
+
+            DragController.DC.stopSelectionFollowingMouse();
+        }
+    }
+
+    public void startFollowMouse() {
+        if (!_isFollowingMouse) {
+            _isFollowingMouse = true;
+
+            _posBeforeFollowingMouse = transform.position;
+        }
+    }
+
+    public void displaceBy(Vector3 delta) {
+        transform.position = _posBeforeFollowingMouse + delta;
+    }
+
+    public void stopFollowMouse(bool trySnapToGrid) {
+        if (_isFollowingMouse) {
+            _isFollowingMouse = false;
+
+            if (trySnapToGrid) {
+                // Find a new nearest unoccupied location
+                Debug.Log("Find the new location for the file!");
+                // TODO: Remove snap below, it's just to prevent visual issues for now
+                transform.position = _posBeforeFollowingMouse;
+            } else {
+                // Return to the previous location
+                transform.position = _posBeforeFollowingMouse;
+            }
         }
     }
 

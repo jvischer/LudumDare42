@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DragController : MonoBehaviour {
 
+    public static DragController DC;
+
     [SerializeField] private RectTransform _parentCanvas;
 	[SerializeField] private RectTransform _topDragLine;
 	[SerializeField] private RectTransform _botDragLine;
@@ -19,9 +21,17 @@ public class DragController : MonoBehaviour {
     private Vector3 _startPos;
     private bool _isDragging = false;
 
+    private bool _isDraggingFiles = false;
+    private Vector3 _dragStartPos;
+
+    private void Awake() {
+        DC = this;
+    }
+
     private void Update() {
         handleInput();
         updateSelection();
+        moveDraggedFiles();
     }
 
     private void updateSelection() {
@@ -68,11 +78,20 @@ public class DragController : MonoBehaviour {
             _rightDragLine.position = pos;
             _rightDragLine.sizeDelta = vert;
 
-            FileSystemManager.FSM.deselectAllFiles();
-            _cachedSelectedFiles = FileSystemManager.FSM.getAllSelectedFiles(minX, maxX, minY, maxY);
-            for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
-                _cachedSelectedFiles[i].trySelectFile();
-            }
+            updateSelectedFileCache();
+        }
+    }
+
+    private void updateSelectedFileCache() {
+        float minX = Mathf.Min(Input.mousePosition.x, _startPos.x);
+        float minY = Mathf.Min(Input.mousePosition.y, _startPos.y);
+        float maxX = Mathf.Max(Input.mousePosition.x, _startPos.x);
+        float maxY = Mathf.Max(Input.mousePosition.y, _startPos.y);
+
+        FileSystemManager.FSM.deselectAllFiles();
+        _cachedSelectedFiles = FileSystemManager.FSM.getAllSelectedFiles(minX, maxX, minY, maxY);
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            _cachedSelectedFiles[i].trySelectFile();
         }
     }
 
@@ -109,6 +128,45 @@ public class DragController : MonoBehaviour {
             for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
                 _cachedSelectedFiles[i].tryDelete();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            stopDesktopDrag();
+
+            FileController.lastClickedFile = AppConsts.MISSING_FILE_ID;
+            FileSystemManager.FSM.deselectAllFiles();
+            DropdownController.DC.hideDropdown();
+        }
+    }
+
+    public void startSelectionFollowingMouse() {
+        _isDraggingFiles = true;
+        _dragStartPos = Input.mousePosition;
+
+        updateSelectedFileCache();
+
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            _cachedSelectedFiles[i].startFollowMouse();
+        }
+    }
+
+    private void moveDraggedFiles() {
+        if (!_isDraggingFiles) {
+            return;
+        }
+
+        Vector3 delta = Input.mousePosition - _dragStartPos;
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            _cachedSelectedFiles[i].displaceBy(delta);
+        }
+    }
+
+    public void stopSelectionFollowingMouse() {
+        _isDraggingFiles = false;
+
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            // TODO: Set to true if released over the desktop or another file (use tags)
+            _cachedSelectedFiles[i].stopFollowMouse(false);
         }
     }
 
