@@ -11,12 +11,14 @@ public class FileController : MonoBehaviour {
 
     public static int lastClickedFile = AppConsts.MISSING_FILE_ID;
 
-    [SerializeField] private RectTransform _clickBoxRectTransform;
-    [SerializeField] private FileOption[] _fileOptions;
+    [SerializeField] protected RectTransform _clickBoxRectTransform;
+    [SerializeField] protected FileOption[] _fileOptions;
 
     [Space]
 
+    public FileType fileType = FileType.Default;
     public int fileID = AppConsts.DEFAULT_FILE_ID;
+    public int desktopPositionIndex = -1;
 
     private const string SELECTED_TRIGGER = "Selected";
     private const string DESELECTED_TRIGGER = "Deselected";
@@ -28,7 +30,7 @@ public class FileController : MonoBehaviour {
     private bool _isFollowingMouse = false;
     private Vector3 _posBeforeFollowingMouse;
 
-    private void Awake() {
+    protected virtual void Awake() {
         _animator = gameObject.GetComponent<Animator>();
     }
 
@@ -74,19 +76,21 @@ public class FileController : MonoBehaviour {
     }
 
     public void tryUnzip() {
-        Debug.Log("Tried to unzip file " + fileID);
+        Debug.Log("TRIED TO UNZIP " + fileID);
     }
 
-    public void tryRestoreContents() {
-        Debug.Log("Tried to restore contents");
+    public virtual void tryRestoreContents() {
+        
     }
 
-    public void tryEmptyRecycleBin() {
-        Debug.Log("Tried to empty the recycle bin");
+    public virtual void tryEmptyRecycleBin() {
+        
     }
 
     public void tryDelete() {
-        gameObject.SetActive(false);
+        if (!wasFileDeleted) {
+            RecycleBinController.RBC.tryDeleteFile(this);
+        }
     }
 
     public float getWidth() {
@@ -112,6 +116,7 @@ public class FileController : MonoBehaviour {
                 lastClickedFile = fileID;
             }
 
+            transform.SetAsLastSibling();
             DragController.DC.startSelectionFollowingMouse();
         } else if (pointerEventData.button == PointerEventData.InputButton.Right) {
             // Handle rmb
@@ -131,9 +136,15 @@ public class FileController : MonoBehaviour {
 
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
             Vector3 pointerDelta = pointerEventData.position - pointerEventData.pressPosition;
-            Debug.Log("Delta is " + pointerDelta + " w/ len " + pointerDelta.sqrMagnitude);
 
             DragController.DC.stopSelectionFollowingMouse();
+
+            // Is it above the recycle bin and holding a file that isn't the recycle bin
+            FileController file;
+            if (RecycleBinController.RBC.isMouseHovering &&
+                FileSystemManager.FSM.tryGetFileWithID(lastClickedFile, out file) && !(file is RecycleBinController)) {
+                Debug.Log("DROPPED " + fileID + " IN RECYCLE BIN");
+            }
         }
     }
 
@@ -155,7 +166,7 @@ public class FileController : MonoBehaviour {
 
             if (trySnapToGrid) {
                 // Find a new nearest unoccupied location
-                Debug.Log("Find the new location for the file!");
+                Debug.Log("TODO: Find the new location for the file!");
                 // TODO: Remove snap below, it's just to prevent visual issues for now
                 transform.position = _posBeforeFollowingMouse;
             } else {
@@ -181,6 +192,12 @@ public class FileController : MonoBehaviour {
         tryDelete();
     }
 
+    public bool wasFileDeleted {
+        get {
+            return !gameObject.activeSelf;
+        }
+    }
+
     public bool wasFileClicked {
         get {
             return lastClickedFile == fileID;
@@ -191,6 +208,10 @@ public class FileController : MonoBehaviour {
         get {
             return _fileOptions;
         }
+    }
+
+    public enum FileType {
+        Default, Virus, Antivirus,
     }
 
     private enum FileAction {

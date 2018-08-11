@@ -354,6 +354,8 @@
     <Compile Include="Assets\Scripts\DropdownOptionController.cs" />
     <Compile Include="Assets\Scripts\FileController.cs" />
     <Compile Include="Assets\Scripts\FileSystemManager.cs" />
+    <Compile Include="Assets\Scripts\RecycleBinController.cs" />
+    <Compile Include="Assets\Scripts\SystemCrashHandler.cs" />
     <Compile Include="Assets\Scripts\TimeSystemManager.cs" />
   </ItemGroup>
   <ItemGroup>

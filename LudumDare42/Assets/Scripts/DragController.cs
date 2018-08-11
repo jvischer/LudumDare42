@@ -20,9 +20,7 @@ public class DragController : MonoBehaviour {
     private List<FileController> _cachedSelectedFiles = new List<FileController>();
     private Vector3 _startPos;
     private bool _isDragging = false;
-
     private bool _isDraggingFiles = false;
-    private Vector3 _dragStartPos;
 
     private void Awake() {
         DC = this;
@@ -141,7 +139,7 @@ public class DragController : MonoBehaviour {
 
     public void startSelectionFollowingMouse() {
         _isDraggingFiles = true;
-        _dragStartPos = Input.mousePosition;
+        _startPos = Input.mousePosition;
 
         updateSelectedFileCache();
 
@@ -155,7 +153,7 @@ public class DragController : MonoBehaviour {
             return;
         }
 
-        Vector3 delta = Input.mousePosition - _dragStartPos;
+        Vector3 delta = Input.mousePosition - _startPos;
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
             _cachedSelectedFiles[i].displaceBy(delta);
         }

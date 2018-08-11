@@ -37,7 +37,7 @@ public class DropdownController : MonoBehaviour {
 
         _bottomBarCover.SetActive(true);
 
-        _dropdownRoot.position = file.transform.position;
+        _dropdownRoot.position = Input.mousePosition;
         _dropdownRoot.gameObject.SetActive(true);
     }
 
