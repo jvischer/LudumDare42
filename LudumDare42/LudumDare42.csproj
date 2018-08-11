@@ -302,9 +302,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DragController.cs" />
-    <Compile Include="Assets\FileController.cs" />
-    <Compile Include="Assets\FileSystemManager.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -350,6 +347,10 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\DragController.cs" />
+    <Compile Include="Assets\Scripts\FileController.cs" />
+    <Compile Include="Assets\Scripts\FileSystemManager.cs" />
+    <Compile Include="Assets\Scripts\TimeSystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Terms.txt" />

@@ -878,40 +878,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224238191585478390, guid: a84cbf0c4805ad44badfa429ffaa7da2,
     type: 2}
   m_PrefabInternal: {fileID: 621811920}
---- !u!1 &677380134 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1142304395719188, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-    type: 2}
-  m_PrefabInternal: {fileID: 1312836517}
---- !u!95 &677380135
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 677380134}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2308db442b62f5449bb90ed1c32ba5f7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &677380136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 677380134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2250070df1d55564383a2806d920a5e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &723941850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,35 +1305,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1142304395719188, guid: a84cbf0c4805ad44badfa429ffaa7da2, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826761708036222, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-        type: 2}
-      propertyPath: m_Transition
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114919153599092014, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114919153599092014, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114919153599092014, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826761708036222, guid: a84cbf0c4805ad44badfa429ffaa7da2,
-        type: 2}
-      propertyPath: m_AnimationTriggers.m_PressedTrigger
-      value: Selected
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a84cbf0c4805ad44badfa429ffaa7da2, type: 2}
   m_IsPrefabParent: 0
@@ -1443,6 +1380,7 @@ GameObject:
   - component: {fileID: 1472188019}
   - component: {fileID: 1472188021}
   - component: {fileID: 1472188020}
+  - component: {fileID: 1472188022}
   m_Layer: 5
   m_Name: Time Text
   m_TagString: Untagged
@@ -1507,6 +1445,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1472188018}
+--- !u!114 &1472188022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1472188018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9e46bab03b4e5a4d94c8a85912bf867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeText: {fileID: 1472188020}
 --- !u!1 &1507084677
 GameObject:
   m_ObjectHideFlags: 0
