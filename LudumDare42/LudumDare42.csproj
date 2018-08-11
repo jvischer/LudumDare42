@@ -348,6 +348,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\Scripts\AppConsts.cs" />
+    <Compile Include="Assets\Scripts\DesktopSystemManager.cs" />
     <Compile Include="Assets\Scripts\DragController.cs" />
     <Compile Include="Assets\Scripts\FileController.cs" />
     <Compile Include="Assets\Scripts\FileSystemManager.cs" />

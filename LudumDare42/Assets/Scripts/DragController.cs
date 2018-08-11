@@ -99,31 +99,12 @@ public class DragController : MonoBehaviour {
     }
 
     private void handleInput() {
-        //if (Input.GetMouseButtonDown(0)) {
-        //    _startPos = Input.mousePosition;
-        //    _isDragging = true;
-
-        //    _topDragLine.gameObject.SetActive(true);
-        //    _botDragLine.gameObject.SetActive(true);
-        //    _leftDragLine.gameObject.SetActive(true);
-        //    _rightDragLine.gameObject.SetActive(true);
-
-        //    FileController file;
-        //    if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
-        //        Debug.Log("De-selecting file: " + file.fileID);
-        //        file.tryDeselectFile();
-        //    }
-        //}
-        //if (Input.GetMouseButtonUp(0)) {
-        //    _isDragging = false;
-
-        //    _topDragLine.gameObject.SetActive(false);
-        //    _botDragLine.gameObject.SetActive(false);
-        //    _leftDragLine.gameObject.SetActive(false);
-        //    _rightDragLine.gameObject.SetActive(false);
-        //}
-
         if (Input.GetKeyDown(KeyCode.Delete)) {
+            FileController file;
+            if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
+                file.tryDelete();
+            }
+
             for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
                 _cachedSelectedFiles[i].tryDelete();
             }

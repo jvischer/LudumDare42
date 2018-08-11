@@ -9,18 +9,18 @@ public class FileController : MonoBehaviour {
 
     public static int lastClickedFile = AppConsts.MISSING_FILE_ID;
 
+    [SerializeField] private RectTransform _clickBoxRectTransform;
+
     public int fileID = AppConsts.DEFAULT_FILE_ID;
 
     private const string SELECTED_TRIGGER = "Selected";
     private const string DESELECTED_TRIGGER = "Deselected";
 
-    private RectTransform _rectTransform;
     private Animator _animator;
     private FileAction _queuedAction = FileAction.Idle;
     private bool _isSelected = false;
 
     private void Awake() {
-        _rectTransform = gameObject.GetComponent<RectTransform>();
         _animator = gameObject.GetComponent<Animator>();
     }
 
@@ -66,11 +66,11 @@ public class FileController : MonoBehaviour {
     }
 
     public float getWidth() {
-        return _rectTransform.rect.width;
+        return _clickBoxRectTransform.rect.width;
     }
 
     public float getHeight() {
-        return _rectTransform.rect.height;
+        return _clickBoxRectTransform.rect.height;
     }
 
     public void clickFile() {
