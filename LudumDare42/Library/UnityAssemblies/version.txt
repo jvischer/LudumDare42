@@ -83,6 +83,9 @@ E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\Un
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\unity\Boo.Lang.dll
 E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
 E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
+E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll
+E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll
+E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll
 E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll
 E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll
 E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll
@@ -109,6 +112,3 @@ E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.Lang.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\Boo.Lang.dll
-E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll
-E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll
-E:/Program Files/Unity 2018.1.6f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll
