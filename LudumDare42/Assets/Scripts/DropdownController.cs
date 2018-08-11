@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +38,32 @@ public class DropdownController : MonoBehaviour {
         _bottomBarCover.SetActive(true);
 
         _dropdownRoot.position = file.transform.position;
+        _dropdownRoot.gameObject.SetActive(true);
+    }
+
+    public void displayDropdownForDesktop(DesktopSystemManager desktopSystemManager) {
+        for (int i = 0; i < _dropdownOptionPool.Length; i++) {
+            // First clear all listeners
+            _dropdownOptionPool[i].optionButton.onClick.RemoveAllListeners();
+
+            // If the index matches an option, display it
+            if (i < desktopSystemManager.desktopOptions.Length) {
+                _dropdownOptionPool[i].optionButton.onClick.AddListener(desktopSystemManager.desktopOptions[i].fireClickedEvent);
+                _dropdownOptionPool[i].optionButton.onClick.AddListener(hideDropdown);
+
+                _dropdownOptionPool[i].optionText.text = desktopSystemManager.desktopOptions[i].optionText;
+
+                _dropdownOptionPool[i].gameObject.SetActive(true);
+            }
+            // Else disable the option
+            else {
+                _dropdownOptionPool[i].gameObject.SetActive(false);
+            }
+        }
+
+        _bottomBarCover.SetActive(true);
+
+        _dropdownRoot.position = Input.mousePosition;
         _dropdownRoot.gameObject.SetActive(true);
     }
 

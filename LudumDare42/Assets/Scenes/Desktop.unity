@@ -2531,6 +2531,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 773351539}
+          m_MethodName: clickDesktop
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 3
@@ -4244,6 +4255,27 @@ MonoBehaviour:
   _defaultIcons:
   - {fileID: 1549495833}
   - {fileID: 1842769926}
+  _desktopOptions:
+  - optionText: Change Background
+    clickedEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 773351539}
+          m_MethodName: rotateDesktopBackground
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  _desktopBGOptions:
+  - {fileID: 21300000, guid: de3e71c8f99c93243b8d23a68fba23ce, type: 3}
+  - {fileID: 21300000, guid: c1678de487b2afb45904ae0fe18651e8, type: 3}
   _virusIconPool:
   - {fileID: 524975157}
   - {fileID: 193569959}
@@ -5423,8 +5455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378d663322a890f4489c149af2e62a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropdownRoot: {fileID: 1508882177}
   _bottomBarCover: {fileID: 543178728}
+  _dropdownRoot: {fileID: 1508882177}
   _dropdownOptionPool:
   - {fileID: 1403918053}
   - {fileID: 1835242745}
