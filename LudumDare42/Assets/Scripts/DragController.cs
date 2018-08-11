@@ -87,6 +87,7 @@ public class DragController : MonoBehaviour {
 
         FileController.lastClickedFile = AppConsts.MISSING_FILE_ID;
         FileSystemManager.FSM.deselectAllFiles();
+        DropdownController.DC.hideDropdown();
     }
 
     public void stopDesktopDrag() {

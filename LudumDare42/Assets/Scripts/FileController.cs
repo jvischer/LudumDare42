@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform), typeof(Animator))]
@@ -10,6 +12,9 @@ public class FileController : MonoBehaviour {
     public static int lastClickedFile = AppConsts.MISSING_FILE_ID;
 
     [SerializeField] private RectTransform _clickBoxRectTransform;
+    [SerializeField] private FileOption[] _fileOptions;
+
+    [Space]
 
     public int fileID = AppConsts.DEFAULT_FILE_ID;
 
@@ -61,6 +66,10 @@ public class FileController : MonoBehaviour {
         _queuedAction = FileAction.Deselect;
     }
 
+    public void tryUnzip() {
+        Debug.Log("Tried to unzip file " + fileID);
+    }
+
     public void tryDelete() {
         gameObject.SetActive(false);
     }
@@ -73,15 +82,39 @@ public class FileController : MonoBehaviour {
         return _clickBoxRectTransform.rect.height;
     }
 
-    public void clickFile() {
-        if (lastClickedFile == fileID) {
-            // Handle double click on item
-            Debug.Log("DOUBLE CLICK ON FILE " + fileID);
-        } else {
-            // Replace the last clicked file
-            FileSystemManager.FSM.deselectLastClickedFile();
-            lastClickedFile = fileID;
+    public void clickFile(BaseEventData baseEventData) {
+        DropdownController.DC.hideDropdown();
+
+        PointerEventData pointerEventData = baseEventData as PointerEventData;
+        if (pointerEventData.button == PointerEventData.InputButton.Left) {
+            // Handle lmb
+            if (lastClickedFile == fileID) {
+                // Handle double click on item
+                Debug.Log("DOUBLE CLICK ON FILE " + fileID);
+            } else {
+                // Replace the last clicked file
+                FileSystemManager.FSM.deselectLastClickedFile();
+                lastClickedFile = fileID;
+            }
+        } else if (pointerEventData.button == PointerEventData.InputButton.Right) {
+            // Handle rmb
+            if (lastClickedFile != fileID) {
+                // Replace the last clicked file
+                FileSystemManager.FSM.deselectLastClickedFile();
+                lastClickedFile = fileID;
+            }
+
+            // Open right click options relative to the file based on the file's data
+            DropdownController.DC.displayDropdownForFile(this);
         }
+    }
+
+    public void clickedEvent_Unzip() {
+        tryUnzip();
+    }
+
+    public void clickedEvent_Delete() {
+        tryDelete();
     }
 
     public bool wasFileClicked {
@@ -90,8 +123,22 @@ public class FileController : MonoBehaviour {
         }
     }
 
+    public FileOption[] fileOptions {
+        get {
+            return _fileOptions;
+        }
+    }
+
     private enum FileAction {
         Idle, Select, Deselect,
     }
+
+}
+
+[Serializable]
+public class FileOption {
+
+    public string optionText;
+    public UnityEvent clickedEvent;
 
 }
