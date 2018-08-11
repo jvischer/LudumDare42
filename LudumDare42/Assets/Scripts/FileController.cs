@@ -70,6 +70,14 @@ public class FileController : MonoBehaviour {
         Debug.Log("Tried to unzip file " + fileID);
     }
 
+    public void tryRestoreContents() {
+        Debug.Log("Tried to restore contents");
+    }
+
+    public void tryEmptyRecycleBin() {
+        Debug.Log("Tried to empty the recycle bin");
+    }
+
     public void tryDelete() {
         gameObject.SetActive(false);
     }
@@ -113,6 +121,14 @@ public class FileController : MonoBehaviour {
         tryUnzip();
     }
 
+    public void clickedEvent_RestoreContents() {
+        tryRestoreContents();
+    }
+
+    public void clickedEvent_EmptyRecycleBin() {
+        tryEmptyRecycleBin();
+    }
+
     public void clickedEvent_Delete() {
         tryDelete();
     }
@@ -140,5 +156,11 @@ public class FileOption {
 
     public string optionText;
     public UnityEvent clickedEvent;
+
+    public void fireClickedEvent() {
+        if (clickedEvent != null) {
+            clickedEvent.Invoke();
+        }
+    }
 
 }

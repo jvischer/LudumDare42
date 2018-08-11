@@ -15,17 +15,20 @@ public class DropdownController : MonoBehaviour {
 
     public void displayDropdownForFile(FileController file) {
         for (int i = 0; i < _dropdownOptionPool.Length; i++) {
+            // First clear all listeners
+            _dropdownOptionPool[i].optionButton.onClick.RemoveAllListeners();
+
             // If the index matches an option, display it
             if (i < file.fileOptions.Length) {
-                _dropdownOptionPool[i].optionButton.onClick.AddListener(() => file.fileOptions[i].clickedEvent.Invoke());
+                _dropdownOptionPool[i].optionButton.onClick.AddListener(file.fileOptions[i].fireClickedEvent);
+                _dropdownOptionPool[i].optionButton.onClick.AddListener(hideDropdown);
+
                 _dropdownOptionPool[i].optionText.text = file.fileOptions[i].optionText;
 
                 _dropdownOptionPool[i].gameObject.SetActive(true);
             }
             // Else disable the option
             else {
-                _dropdownOptionPool[i].optionButton.onClick.RemoveAllListeners();
-
                 _dropdownOptionPool[i].gameObject.SetActive(false);
             }
         }
