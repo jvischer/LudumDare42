@@ -8,24 +8,32 @@ public class FileSystemManager : MonoBehaviour {
     public static FileSystemManager FSM;
 
     // TODO: Convert to directories which contain files if I decide that files will add to the game
-    private HashSet<FileController> _managedFiles = new HashSet<FileController>();
+    private Dictionary<int, FileController> _managedFiles = new Dictionary<int, FileController>();
+    private int availableID = 0;
 
     private void Awake() {
         FSM = this;
     }
     
     public void registerFile(FileController file) {
-        _managedFiles.Add(file);
+        file.fileID = availableID++;
+
+        _managedFiles.Add(file.fileID, file);
     }
 
     public void deregisterFile(FileController file) {
-        _managedFiles.Remove(file);
+        _managedFiles.Remove(file.fileID);
     }
 
     public List<FileController> getAllSelectedFiles(float minX, float maxX, float minY, float maxY) {
         List<FileController> selectedFiles = new List<FileController>();
 
-        foreach (FileController file in _managedFiles) {
+        foreach (FileController file in _managedFiles.Values) {
+            if (file.wasFileClicked) {
+                selectedFiles.Add(file);
+                continue;
+            }
+
             Vector3 filePos = file.transform.position;
             float deltaX = file.getWidth() / 2;
             float deltaY = file.getHeight() / 2;
@@ -45,10 +53,21 @@ public class FileSystemManager : MonoBehaviour {
         return selectedFiles;
     }
 
-    public void deselectAllFiles() {
-        foreach (FileController file in _managedFiles) {
+    public void deselectLastClickedFile() {
+        FileController file;
+        if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
             file.tryDeselectFile();
         }
+    }
+
+    public void deselectAllFiles() {
+        foreach (FileController file in _managedFiles.Values) {
+            file.tryDeselectFile();
+        }
+    }
+
+    public bool tryGetFileWithID(int fileID, out FileController file) {
+        return _managedFiles.TryGetValue(fileID, out file) && file != null;
     }
 
 }

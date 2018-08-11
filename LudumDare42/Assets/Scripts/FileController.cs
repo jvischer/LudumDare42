@@ -7,6 +7,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform), typeof(Animator))]
 public class FileController : MonoBehaviour {
 
+    public static int lastClickedFile = AppConsts.MISSING_FILE_ID;
+
+    public int fileID = AppConsts.DEFAULT_FILE_ID;
+
     private const string SELECTED_TRIGGER = "Selected";
     private const string DESELECTED_TRIGGER = "Deselected";
 
@@ -67,6 +71,23 @@ public class FileController : MonoBehaviour {
 
     public float getHeight() {
         return _rectTransform.rect.height;
+    }
+
+    public void clickFile() {
+        if (lastClickedFile == fileID) {
+            // Handle double click on item
+            Debug.Log("DOUBLE CLICK ON FILE " + fileID);
+        } else {
+            // Replace the last clicked file
+            FileSystemManager.FSM.deselectLastClickedFile();
+            lastClickedFile = fileID;
+        }
+    }
+
+    public bool wasFileClicked {
+        get {
+            return lastClickedFile == fileID;
+        }
     }
 
     private enum FileAction {
