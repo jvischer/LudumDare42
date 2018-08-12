@@ -17,7 +17,7 @@ public static class AppConsts {
 
     public const float RECYCLE_BIN_WIDTH_TOLERANCE = 0.75F;
 
-    public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.05F;
+    public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.5F;
 
     public const float DESKTOP_MOVEMENT_NULLABLE_SQR_DISTANCE = 40.0F;
 
