@@ -25,7 +25,7 @@ public class StartMenuController : MonoBehaviour {
 
         _animator = gameObject.GetComponent<Animator>();
 
-        _userNameText.text = String.Format(AppConsts.ADMIN_FMT, AppConsts.DIFFICULTY_TO_TEXT[Mathf.Clamp(DataManager.getDifficulty(), 0, AppConsts.DIFFICULTY_TO_TEXT.Length)]);
+        _userNameText.text = String.Format(AppConsts.ADMIN_FMT, AppConsts.DIFFICULTY_TO_TEXT[Mathf.Clamp(DataManager.getDifficulty(), 0, AppConsts.DIFFICULTY_TO_TEXT.Length - 1)]);
         //populateRecentScores();
     }
 

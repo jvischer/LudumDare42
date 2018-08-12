@@ -3903,11 +3903,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bf12b54efc05241821ea1bdfc7dec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnRampUpDuration: 60
-  _initialMinSpawnDelay: 1.75
-  _initialMaxSpawnDelay: 2
-  _endMinSpawnDelay: 0.4
-  _endMaxSpawnDelay: 0.5
+  _difficultyData:
+  - _spawnRampUpDuration: 60
+    _initialMinSpawnDelay: 1.75
+    _initialMaxSpawnDelay: 2
+    _endMinSpawnDelay: 1
+    _endMaxSpawnDelay: 1.1
+  - _spawnRampUpDuration: 60
+    _initialMinSpawnDelay: 1.5
+    _initialMaxSpawnDelay: 1.75
+    _endMinSpawnDelay: 0.75
+    _endMaxSpawnDelay: 0.85
+  - _spawnRampUpDuration: 60
+    _initialMinSpawnDelay: 1.25
+    _initialMaxSpawnDelay: 1.5
+    _endMinSpawnDelay: 0.5
+    _endMaxSpawnDelay: 0.6
 --- !u!1001 &241719672
 Prefab:
   m_ObjectHideFlags: 0
@@ -22742,11 +22753,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scanningVirusDuration: 10
-  _spawnRampUpDuration: 120
-  _initialMinSpawnDelay: 5
-  _initialMaxSpawnDelay: 5.5
-  _endMinSpawnDelay: 0.8
-  _endMaxSpawnDelay: 1
+  _difficultyData:
+  - _spawnRampUpDuration: 90
+    _initialMinSpawnDelay: 5
+    _initialMaxSpawnDelay: 5.5
+    _endMinSpawnDelay: 2
+    _endMaxSpawnDelay: 2.5
+  - _spawnRampUpDuration: 90
+    _initialMinSpawnDelay: 4.5
+    _initialMaxSpawnDelay: 5
+    _endMinSpawnDelay: 2.25
+    _endMaxSpawnDelay: 2.75
+  - _spawnRampUpDuration: 90
+    _initialMinSpawnDelay: 4
+    _initialMaxSpawnDelay: 4.5
+    _endMinSpawnDelay: 2.5
+    _endMaxSpawnDelay: 3
   _killDurationUponVirusKilled: 0.5
   _delayToSpawnNewZipBomb: 5
 --- !u!1 &1140286501

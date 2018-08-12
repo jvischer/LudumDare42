@@ -88,12 +88,10 @@ public class DesktopSystemManager : MonoBehaviour {
     }
 
     private void OnApplicationPause(bool pause) {
-        Debug.Log("Paused");
         serializeAndSaveData();
     }
 
     private void OnApplicationQuit() {
-        Debug.Log("Quit");
         serializeAndSaveData();
     }
 

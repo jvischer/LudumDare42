@@ -38,7 +38,6 @@ public class RecycleBinController : FileController {
     }
 
     public override void tryRestoreContents() {
-        Debug.Log("Tried to restore " + _recycledFiles.Count + " contents");
         for (int i = 0; i < _recycledFiles.Count; i++) {
             DesktopSystemManager.DSM.neatlyAddFile(_recycledFiles[i]);
         }
@@ -47,7 +46,6 @@ public class RecycleBinController : FileController {
     }
 
     public override void tryEmptyRecycleBin() {
-        Debug.Log("Tried to empty the recycle bin");
         for (int i = 0; i < _recycledFiles.Count; i++) {
             switch (_recycledFiles[i].fileType) {
                 case FileType.Virus:

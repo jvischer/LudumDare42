@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public static class AppConsts {
 
@@ -100,5 +101,23 @@ public static class AppConsts {
     public const string NOTIFICATION_ON_ZIP_BOMB_KILLED_BODY = "All virus processes have been killed.";
     public const string NOTIFICATION_ON_RECYCLE_BIN_FILLED_HEADER = "Recycle bin is full!";
     public const string NOTIFICATION_ON_RECYCLE_BIN_FILLED_BODY = "You must empty it before you continue.";
+
+}
+
+[Serializable]
+public class DifficultyData {
+
+    [SerializeField] private float _spawnRampUpDuration;
+    [SerializeField] private float _initialMinSpawnDelay;
+    [SerializeField] private float _initialMaxSpawnDelay;
+    [SerializeField] private float _endMinSpawnDelay;
+    [SerializeField] private float _endMaxSpawnDelay;
+
+    public float getWaitTime(float time) {
+        float progress = Mathf.Clamp01(time / _spawnRampUpDuration);
+        float minSpawnDelayDelta = _endMinSpawnDelay - _initialMinSpawnDelay;
+        float maxSpawnDelayDelta = _endMaxSpawnDelay - _initialMaxSpawnDelay;
+        return UnityEngine.Random.Range(_initialMinSpawnDelay + progress * minSpawnDelayDelta, _initialMaxSpawnDelay + progress * maxSpawnDelayDelta);
+    }
 
 }

@@ -196,7 +196,6 @@ public class FileController : MonoBehaviour {
     }
 
     private void onDoubleClick() {
-        Debug.Log("DOUBLE CLICK ON FILE " + fileID);
         if (fileType == FileType.ZipBomb ||
             fileType == FileType.Virus) {
             tryUnzip();
