@@ -39,18 +39,17 @@ public class ClippyController : MonoBehaviour {
         }
 
         _currentConversation = conversation;
-        progressConversation();
+        progressConversation(0);
     }
 
-    private void progressConversation() {
-        if (_currentConversation.tryContinueConversation()) {
+    private void progressConversation(int indexChange) {
+        if (_currentConversation.tryContinueConversation(indexChange)) {
             _clippyText.text = _currentConversation.text;
 
-            _okayButton.SetActive(_currentConversation.okayResponse != null);
+            _okayButton.SetActive(_currentConversation.frameType == ClippyConversationFrame.ConversationFrameType.Okay);
 
-            _yesButton.SetActive(_currentConversation.yesResponse != null);
-
-            _noButton.SetActive(_currentConversation.noResponse != null);
+            _yesButton.SetActive(_currentConversation.frameType == ClippyConversationFrame.ConversationFrameType.Unique);
+            _noButton.SetActive(_currentConversation.frameType == ClippyConversationFrame.ConversationFrameType.Unique);
 
             if (!_isMidConversation) {
                 _isMidConversation = true;
@@ -75,7 +74,7 @@ public class ClippyController : MonoBehaviour {
             _currentConversation.okayResponse.Invoke();
         }
 
-        progressConversation();
+        progressConversation(_currentConversation.okayResponseIndexChange);
     }
 
     public void executeYesResponse() {
@@ -83,7 +82,7 @@ public class ClippyController : MonoBehaviour {
             _currentConversation.yesResponse.Invoke();
         }
 
-        progressConversation();
+        progressConversation(_currentConversation.yesResponseIndexChange);
     }
 
     public void executeNoResponse() {
@@ -91,7 +90,7 @@ public class ClippyController : MonoBehaviour {
             _currentConversation.noResponse.Invoke();
         }
 
-        progressConversation();
+        progressConversation(_currentConversation.noResponseIndexChange);
     }
 
 }
@@ -118,9 +117,21 @@ public class ClippyConversation {
         }
     }
 
+    public int okayResponseIndexChange {
+        get {
+            return _conversationFrames[_currentConversationIndex].okayResponseIndexChange;
+        }
+    }
+
     public ClippyConversationFrame.ResponseDelegate yesResponse {
         get {
             return _conversationFrames[_currentConversationIndex].yesResponse;
+        }
+    }
+
+    public int yesResponseIndexChange {
+        get {
+            return _conversationFrames[_currentConversationIndex].yesResponseIndexChange;
         }
     }
 
@@ -130,8 +141,20 @@ public class ClippyConversation {
         }
     }
 
-    public bool tryContinueConversation() {
-        _currentConversationIndex++;
+    public int noResponseIndexChange {
+        get {
+            return _conversationFrames[_currentConversationIndex].noResponseIndexChange;
+        }
+    }
+
+    public ClippyConversationFrame.ConversationFrameType frameType {
+        get {
+            return _conversationFrames[_currentConversationIndex].frameType;
+        }
+    }
+
+    public bool tryContinueConversation(int indexChange) {
+        _currentConversationIndex += (1 + indexChange);
         return _currentConversationIndex < _conversationFrames.Length;
     }
 
@@ -143,14 +166,35 @@ public class ClippyConversationFrame {
 
     public string text;
     public ResponseDelegate okayResponse;
+    public int okayResponseIndexChange;
     public ResponseDelegate yesResponse;
+    public int yesResponseIndexChange;
     public ResponseDelegate noResponse;
+    public int noResponseIndexChange;
 
-    public ClippyConversationFrame(string text, ResponseDelegate okayResponse, ResponseDelegate yesResponse, ResponseDelegate noResponse) {
+    public ConversationFrameType frameType;
+
+    public ClippyConversationFrame(string text, ResponseDelegate okayResponse, int okayResponseIndexChange) {
         this.text = text;
         this.okayResponse = okayResponse;
+        this.okayResponseIndexChange = okayResponseIndexChange;
+
+        this.frameType = ConversationFrameType.Okay;
+    }
+
+    public ClippyConversationFrame(string text, ResponseDelegate yesResponse, int yesResponseIndexChange,
+                                                ResponseDelegate noResponse, int noResponseIndexChange) {
+        this.text = text;
         this.yesResponse = yesResponse;
+        this.yesResponseIndexChange = yesResponseIndexChange;
         this.noResponse = noResponse;
+        this.noResponseIndexChange = noResponseIndexChange;
+
+        this.frameType = ConversationFrameType.Unique;
+    }
+
+    public enum ConversationFrameType {
+        Okay, Unique,
     }
 
 }

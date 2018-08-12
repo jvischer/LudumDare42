@@ -14,6 +14,11 @@ public static class AppConsts {
     public const string CLIPPY_TEXT_INTRO = "Hi! I am Clippy, your office assistant. Would you like some assistance today?";
 
     /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_INTRO_RESPONSE_YES = "I'm sorry, it seems I haven't had my morning coffee. I'll be back soon.";
+
+    /// <summary>
     /// Yes/No
     /// </summary>
     public const string CLIPPY_TEXT_UNZIPPED = "It looks like you have opened a zip bomb! Would you like some assistance?";

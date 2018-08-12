@@ -183,8 +183,9 @@ public class DesktopSystemManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.LeftAlt)) {
             ClippyController.CC.startConversation(new ClippyConversation(
-                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO, null, yes, no),
-                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_RESPONSE_NO, okay, null, null)
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO, yes, 0, no, 1),
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO_RESPONSE_YES, okay, 1),
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_RESPONSE_NO, okay, 0)
             ));
         }
     }
