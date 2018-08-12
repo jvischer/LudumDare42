@@ -7,6 +7,10 @@ public static class AppConsts {
 
     public static int[] RECYCLE_BIN_LIMIT_BY_DIFFICULTY = new int[] { 25, 20, 15 };
 
+    public static string[] DIFFICULTY_TO_TEXT = new string[] { "Easy", "Medium", "1337" };
+    public const string ADMIN_FMT = "Administrator - {0}";
+
+    public const string DATA_SCORES_KEY = "Scores";
     public const string DATA_DIFFICULTY_KEY = "Diff";
     public const string DATA_AUDIO_KEY = "Audio";
 

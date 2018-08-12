@@ -65,7 +65,9 @@ public class AntivirusManager : MonoBehaviour {
             // Check if the win condition has been met
             if (DesktopSystemManager.DSM.activeAntivirusFileCount >= DesktopSystemManager.DSM.desktopIconSpace * AppConsts.PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS) {
                 ZipBombManager.ZBM.killVirus();
-                killAntivirus();
+                //DataManager.logScore(ZipBombManager.ZBM.activeDuration);
+                //StartMenuController.SMC.clearAndRepopulateRecentScores();
+                //killAntivirus(); TODO: IS NEEDED>?!!?!??!
 
                 DesktopSystemManager.DSM.killVirusFiles();
                 RecycleBinController.RBC.tryEmptyRecycleBin();

@@ -361,6 +361,7 @@
     <Compile Include="Assets\Scripts\NotificationController.cs" />
     <Compile Include="Assets\Scripts\ProgressBarLoopController.cs" />
     <Compile Include="Assets\Scripts\RecycleBinController.cs" />
+    <Compile Include="Assets\Scripts\ScoreListing.cs" />
     <Compile Include="Assets\Scripts\StartMenuController.cs" />
     <Compile Include="Assets\Scripts\StartupSceneController.cs" />
     <Compile Include="Assets\Scripts\SystemCrashHandler.cs" />

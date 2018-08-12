@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public static class DataManager {
     }
 
     private static void initializeData() {
+        string scoreJSON = JsonUtility.ToJson(new List<string>());
+        PlayerPrefs.SetString(AppConsts.DATA_SCORES_KEY, scoreJSON);
         PlayerPrefs.SetInt(AppConsts.DATA_DIFFICULTY_KEY, 0);
         PlayerPrefs.SetInt(AppConsts.DATA_AUDIO_KEY, 1);
 
@@ -42,6 +45,25 @@ public static class DataManager {
 
         save();
     }
+
+    //public static List<string> getRecentScores() {
+    //    if (PlayerPrefs.HasKey(AppConsts.DATA_SCORES_KEY)) {
+    //        string scoreJSON = PlayerPrefs.GetString(AppConsts.DATA_SCORES_KEY);
+    //        return JsonUtility.FromJson<List<string>>(scoreJSON);
+    //    }
+    //    return new List<string>();
+    //}
+
+    //public static void logScore(float time) {
+    //    string score = String.Format("{0}s - {1}", time.ToString("#.00"), AppConsts.DIFFICULTY_TO_TEXT[Mathf.Clamp(DataManager.getDifficulty(), 0, AppConsts.DIFFICULTY_TO_TEXT.Length)]);
+    //    Debug.Log("Logging score " + score);
+
+    //    List<string> recentScore = getRecentScores();
+    //    recentScore.Add(score);
+    //    string scoreJSON = JsonUtility.ToJson(recentScore, true);
+    //    Debug.Log("storing JSON " + scoreJSON);
+    //    PlayerPrefs.SetString(AppConsts.DATA_SCORES_KEY, scoreJSON);
+    //}
 
     public static void save() {
         PlayerPrefs.Save();

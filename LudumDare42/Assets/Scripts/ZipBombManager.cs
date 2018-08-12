@@ -46,6 +46,7 @@ public class ZipBombManager : MonoBehaviour {
             OnZipBombKilled.Invoke(this, EventArgs.Empty);
         }
 
+        _isVirusActive = false;
         StopAllCoroutines();
     }
 
