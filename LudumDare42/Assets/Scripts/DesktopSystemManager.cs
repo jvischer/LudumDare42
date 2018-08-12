@@ -36,6 +36,8 @@ public class DesktopSystemManager : MonoBehaviour {
     private HashSet<FileController> _activeAntivirusFiles = new HashSet<FileController>();
 
     private int _currentDesktopBG = 0;
+    private int _availableVirusID = 0;
+    private int _availableAntivirusID = 0;
 
     private void Awake() {
         DSM = this;
@@ -73,6 +75,12 @@ public class DesktopSystemManager : MonoBehaviour {
 
         for (int i = 0; i < _antiVirusIconPool.Length; i++) {
             _availableAntivirusFiles.Add(_antiVirusIconPool[i]);
+        }
+    }
+
+    public void tryReAddZipBomb() {
+        if (_defaultIcons[1].wasFileDeleted) {
+            neatlyAddFile(_defaultIcons[1]);
         }
     }
 
@@ -136,10 +144,14 @@ public class DesktopSystemManager : MonoBehaviour {
 
         switch (file.fileType) {
             case FileController.FileType.Virus:
+                file.setName(String.Format(AppConsts.FILE_NAME_VIRUS_FMT, _availableVirusID++));
+
                 _availableVirusFiles.Remove(file);
                 _activeVirusFiles.Add(file);
                 break;
             case FileController.FileType.Antivirus:
+                file.setName(String.Format(AppConsts.FILE_NAME_ANTIVIRUS_FMT, _availableAntivirusID++));
+
                 _availableAntivirusFiles.Remove(file);
                 _activeAntivirusFiles.Add(file);
                 break;
@@ -172,6 +184,16 @@ public class DesktopSystemManager : MonoBehaviour {
         for (int i = 0; i < filesToKill.Length; i++) {
             filesToKill[i].tryDelete();
         }
+    }
+
+    public bool tryKillRandomAntivirusFile() {
+        if (_activeAntivirusFiles.Count <= 0) {
+            return false;
+        }
+
+        FileController fileToKill = _activeAntivirusFiles.ElementAt(UnityEngine.Random.Range(0, _activeAntivirusFiles.Count));
+        fileToKill.tryDelete();
+        return true;
     }
 
     public void clickDesktop(BaseEventData baseEventData) {

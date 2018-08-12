@@ -279,7 +279,10 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+  _fileNameText: {fileID: 114093683622384422}
+  fileType: 0
   fileID: -2
+  desktopPositionIndex: -1
 --- !u!114 &114919153599092014
 MonoBehaviour:
   m_ObjectHideFlags: 1

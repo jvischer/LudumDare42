@@ -11,7 +11,8 @@ public class RecycleBinController : FileController {
     public static RecycleBinController RBC;
 
     private List<FileController> _recycledFiles = new List<FileController>();
-    private int _emptiedFileCount; // TODO: Split into virus/antivirus counts?
+    private int _emptiedVirusFileCount;
+    private int _emptiedAntivirusFileCount;
 
     protected override void Awake() {
         base.Awake();
@@ -29,7 +30,16 @@ public class RecycleBinController : FileController {
 
     public override void tryEmptyRecycleBin() {
         Debug.Log("Tried to empty the recycle bin");
-        _emptiedFileCount += _recycledFiles.Count;
+        for (int i = 0; i < _recycledFiles.Count; i++) {
+            switch (_recycledFiles[i].fileType) {
+                case FileType.Virus:
+                    _emptiedVirusFileCount++;
+                    break;
+                case FileType.Antivirus:
+                    _emptiedAntivirusFileCount++;
+                    break;
+            }
+        }
         _recycledFiles.Clear();
     }
 
@@ -44,6 +54,18 @@ public class RecycleBinController : FileController {
     public bool canDeleteItems {
         get {
             return gameObject.activeSelf;
+        }
+    }
+
+    public int emptiedVirusFileCount {
+        get {
+            return _emptiedVirusFileCount;
+        }
+    }
+
+    public int emptiedAntivirusFileCount {
+        get {
+            return _emptiedAntivirusFileCount;
         }
     }
 

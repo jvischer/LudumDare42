@@ -13,6 +13,7 @@ public class FileController : MonoBehaviour {
 
     [SerializeField] protected RectTransform _clickBoxRectTransform;
     [SerializeField] protected FileOption[] _fileOptions;
+    [SerializeField] protected Text _fileNameText;
 
     [Space]
 
@@ -106,6 +107,11 @@ public class FileController : MonoBehaviour {
 
     public float getHeight() {
         return _clickBoxRectTransform.rect.height;
+    }
+
+    public void setName(string name) {
+        gameObject.name = name;
+        _fileNameText.text = name;
     }
 
     public void clickFile(BaseEventData baseEventData) {

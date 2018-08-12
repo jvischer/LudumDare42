@@ -19,6 +19,11 @@ public class AntivirusManager : MonoBehaviour {
     [SerializeField] private float _endMinSpawnDelay;
     [SerializeField] private float _endMaxSpawnDelay;
 
+    [Space]
+
+    [SerializeField] private float _killDurationUponVirusKilled;
+    [SerializeField] private float _delayToSpawnNewZipBomb;
+
     private bool _isAntivirusActive = false;
 
     private void Awake() {
@@ -74,6 +79,23 @@ public class AntivirusManager : MonoBehaviour {
             time += waitTime;
             yield return new WaitForSeconds(waitTime);
         }
+
+        StartCoroutine(handleRemovingAntivirusFiles());
+    }
+
+    private IEnumerator handleRemovingAntivirusFiles() {
+        WaitForSeconds wfs = new WaitForSeconds(_killDurationUponVirusKilled);
+        while (true) {
+            if (!DesktopSystemManager.DSM.tryKillRandomAntivirusFile()) {
+                break;
+            }
+
+            yield return wfs;
+        }
+
+        // Start countdown until next zip bomb file appears
+        yield return new WaitForSeconds(_delayToSpawnNewZipBomb);
+        DesktopSystemManager.DSM.tryReAddZipBomb();
     }
 
     public bool isAntivirusActive {

@@ -17,13 +17,21 @@ public class ZipBombManager : MonoBehaviour {
     [SerializeField] private float _endMaxSpawnDelay;
 
     private bool _isVirusActive = false;
+    private float _activeDuration = 0;
 
     private void Awake() {
         ZBM = this;
     }
 
+    private void Update() {
+        if (_isVirusActive) {
+            _activeDuration += Time.deltaTime;
+        }
+    }
+
     public void executeVirus() {
         _isVirusActive = true;
+        _activeDuration = 0;
 
         if (OnZipBombExecuted != null) {
             OnZipBombExecuted.Invoke(this, EventArgs.Empty);
@@ -61,6 +69,12 @@ public class ZipBombManager : MonoBehaviour {
     public bool isVirusActive {
         get {
             return _isVirusActive;
+        }
+    }
+
+    public float activeDuration {
+        get {
+            return _activeDuration;
         }
     }
 

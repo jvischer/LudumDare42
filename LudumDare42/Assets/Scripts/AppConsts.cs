@@ -13,6 +13,10 @@ public static class AppConsts {
     public const float CLIPPY_INTRO_CONVERSATION_DELAY = 6.0F;
     public const float CLIPPY_ZIP_BOMB_CONVERSATION_DELAY = 2.5F;
     public const float CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY = 60.0F;
+    public const float CLIPPY_SCORE_CONVERSATION_DELAY = 1.0F;
+
+    public const string FILE_NAME_VIRUS_FMT = "lib {0}.zip";
+    public const string FILE_NAME_ANTIVIRUS_FMT = "api-win-core l1-{0}.dll";
 
     /// <summary>
     /// Yes/No
@@ -58,6 +62,16 @@ public static class AppConsts {
     /// Okay
     /// </summary>
     public const string CLIPPY_TEXT_HELP = "Please stop the virus! It's hurting me!";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_SCORE = "The virus is gone! It ran for {0} seconds.";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_SCORE_2 = "You fully deleted {0} virus files and {1} antivirus files.";
 
     public const string CLIPPY_TEXT_RESPONSE_NO = "Okay. Have a nice day!";
 
