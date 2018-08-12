@@ -34,6 +34,7 @@ public class ZipBombManager : MonoBehaviour {
         }
 
         RecycleBinController.RBC.resetCounters();
+        DesktopSystemManager.DSM.resetCounters();
         AntivirusManager.AM.startScanning();
         StartCoroutine(handleVirus());
     }

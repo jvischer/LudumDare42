@@ -134,8 +134,8 @@ public class RecycleBinController : FileController {
     public bool isMouseHovering {
         get {
             Vector3 centerPos = _clickBoxRectTransform.position;
-            float deltaX = _clickBoxRectTransform.rect.width / 2;
-            float deltaY = _clickBoxRectTransform.rect.height / 2;
+            float deltaX = _clickBoxRectTransform.rect.width * AppConsts.RECYCLE_BIN_WIDTH_TOLERANCE;
+            float deltaY = _clickBoxRectTransform.rect.height * AppConsts.RECYCLE_BIN_WIDTH_TOLERANCE;
             return centerPos.x - deltaX <= Input.mousePosition.x && Input.mousePosition.x <= centerPos.x + deltaX &&
                    centerPos.y - deltaY <= Input.mousePosition.y && Input.mousePosition.y <= centerPos.y + deltaY;
         }

@@ -101,6 +101,11 @@ public class DesktopSystemManager : MonoBehaviour {
         DataManager.save();
     }
 
+    public void resetCounters() {
+        _availableVirusID = 0;
+        _availableAntivirusID = 0;
+    }
+
     public void tryReAddZipBomb() {
         if (_defaultIcons[1].wasFileDeleted) {
             StartCoroutine(keepTryingToReAddZipBomb());
@@ -172,7 +177,7 @@ public class DesktopSystemManager : MonoBehaviour {
         file.gameObject.SetActive(true);
 
         file.transform.SetParent(_activeFilePool);
-        file.transform.SetAsLastSibling();
+        file.transform.SetAsFirstSibling();
 
         file.tryDeselectFile();
 
