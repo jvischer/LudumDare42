@@ -19,6 +19,7 @@ public static class AppConsts {
     public const float CLIPPY_ZIP_BOMB_CONVERSATION_DELAY = 2.5F;
     public const float CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY = 45.0F;
     public const float CLIPPY_SCORE_CONVERSATION_DELAY = 1.0F;
+    public const float CLIPPY_DESTROYED_RECYCLE_BIN_CONVERSATION_DELAY = 0.5F;
 
     public const float FILE_UNZIP_DURATION = 1.5F;
 
@@ -79,6 +80,11 @@ public static class AppConsts {
     /// Okay
     /// </summary>
     public const string CLIPPY_TEXT_SCORE_2 = "You fully deleted {0} virus files and {1} antivirus files.";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_DESTROYED_RECYCLE_BIN = "Oh no! You deleted the recycle bin! We're all doomed! Doomed!!!";
 
     public const string CLIPPY_TEXT_RESPONSE_NO = "Okay. Have a nice day!";
 

@@ -36,6 +36,7 @@ public class ClippyController : MonoBehaviour {
 
         ZipBombManager.OnZipBombExecuted += zipBombManager_OnZipBombExecuted;
         ZipBombManager.OnZipBombKilled += zipBombManager_OnZipBombKilled;
+        RecycleBinController.OnRecycleBinDestroyed += recycleBinController_OnRecycleBinDestroyed;
         StartCoroutine(queueClippyIntroConversation());
     }
 
@@ -106,6 +107,10 @@ public class ClippyController : MonoBehaviour {
         StartCoroutine(queueClippyScoreConversation());
     }
 
+    private void recycleBinController_OnRecycleBinDestroyed(object sender, EventArgs e) {
+        StartCoroutine(queueClippyDestroyedRecycleBinConversation());
+    }
+
     private IEnumerator queueClippyIntroConversation() {
         yield return new WaitForSeconds(AppConsts.CLIPPY_INTRO_CONVERSATION_DELAY);
         if (_canPlayIntroConversation) {
@@ -149,6 +154,13 @@ public class ClippyController : MonoBehaviour {
         ClippyController.CC.startConversation(new ClippyConversation(
             new ClippyConversationFrame(String.Format(AppConsts.CLIPPY_TEXT_SCORE, activeDuration), null, 0),
             new ClippyConversationFrame(String.Format(AppConsts.CLIPPY_TEXT_SCORE_2, emptiedVirusFileCount, emptiedAntivirusFileCount), null, 0)
+        ));
+    }
+
+    private IEnumerator queueClippyDestroyedRecycleBinConversation() {
+        yield return new WaitForSeconds(AppConsts.CLIPPY_DESTROYED_RECYCLE_BIN_CONVERSATION_DELAY);
+        ClippyController.CC.startConversation(new ClippyConversation(
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_DESTROYED_RECYCLE_BIN, null, 0)
         ));
     }
 

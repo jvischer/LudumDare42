@@ -86,13 +86,15 @@ public class FileController : MonoBehaviour {
 
         if (!ZipBombManager.ZBM.isVirusActive) {
             ZipBombManager.ZBM.executeVirus();
-            tryDelete();
         } else {
             FileController newFile = DesktopSystemManager.DSM.getFileOfType(FileType.Virus);
             if (newFile != null) {
                 DesktopSystemManager.DSM.randomlyAddFile(newFile);
             }
-            tryDelete();
+        }
+
+        if (!wasFileDeleted) {
+            RecycleBinController.RBC.tryUnzipFile(this);
         }
     }
 
