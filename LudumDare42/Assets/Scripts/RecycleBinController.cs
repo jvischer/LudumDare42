@@ -23,10 +23,14 @@ public class RecycleBinController : FileController {
         for (int i = 0; i < _recycledFiles.Count; i++) {
             DesktopSystemManager.DSM.neatlyAddFile(_recycledFiles[i]);
         }
+
+        _recycledFiles.Clear();
     }
 
     public override void tryEmptyRecycleBin() {
         Debug.Log("Tried to empty the recycle bin");
+        _emptiedFileCount += _recycledFiles.Count;
+        _recycledFiles.Clear();
     }
 
     public void tryDeleteFile(FileController file) {
@@ -46,10 +50,10 @@ public class RecycleBinController : FileController {
     public bool isMouseHovering {
         get {
             Vector3 centerPos = _clickBoxRectTransform.position;
-            float halfWidth = _clickBoxRectTransform.rect.width / 2;
-            float halfHeight = _clickBoxRectTransform.rect.height / 2;
-            return centerPos.x - halfWidth <= Input.mousePosition.x && Input.mousePosition.x <= centerPos.x + halfWidth &&
-                   centerPos.y - halfHeight <= Input.mousePosition.y && Input.mousePosition.y <= centerPos.y + halfHeight;
+            float deltaX = _clickBoxRectTransform.rect.width / 2;
+            float deltaY = _clickBoxRectTransform.rect.height / 2;
+            return centerPos.x - deltaX <= Input.mousePosition.x && Input.mousePosition.x <= centerPos.x + deltaX &&
+                   centerPos.y - deltaY <= Input.mousePosition.y && Input.mousePosition.y <= centerPos.y + deltaY;
         }
     }
 

@@ -123,7 +123,7 @@ public class DragController : MonoBehaviour {
                 file.tryDelete();
             }
 
-            for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            for (int i = _cachedSelectedFiles.Count - 1; i >= 0; i--) {
                 _cachedSelectedFiles[i].tryDelete();
             }
         }

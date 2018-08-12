@@ -76,7 +76,9 @@ public class FileController : MonoBehaviour {
     }
 
     public void tryUnzip() {
-        Debug.Log("TRIED TO UNZIP " + fileID);
+        ZipBombManager.ZBM.executeVirus();
+        // TODO: Display loading bar before deleting the file, while initial files are spawning
+        tryDelete();
     }
 
     public virtual void tryRestoreContents() {
@@ -135,15 +137,13 @@ public class FileController : MonoBehaviour {
         PointerEventData pointerEventData = baseEventData as PointerEventData;
 
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
-            Vector3 pointerDelta = pointerEventData.position - pointerEventData.pressPosition;
-
             DragController.DC.stopSelectionFollowingMouse();
 
             // Is it above the recycle bin and holding a file that isn't the recycle bin
             FileController file;
             if (RecycleBinController.RBC.isMouseHovering &&
                 FileSystemManager.FSM.tryGetFileWithID(lastClickedFile, out file) && !(file is RecycleBinController)) {
-                Debug.Log("DROPPED " + fileID + " IN RECYCLE BIN");
+                file.tryDelete();
             }
         }
     }
@@ -217,7 +217,7 @@ public class FileController : MonoBehaviour {
     private enum FileAction {
         Idle, Select, Deselect,
     }
-
+    
 }
 
 [Serializable]

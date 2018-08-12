@@ -64,6 +64,14 @@ public class DesktopSystemManager : MonoBehaviour {
             _defaultIcons[i].transform.SetParent(_activeFilePool);
             _defaultIcons[i].transform.SetAsLastSibling();
         }
+
+        for (int i = 0; i < _virusIconPool.Length; i++) {
+            _availableVirusFiles.Add(_virusIconPool[i]);
+        }
+
+        for (int i = 0; i < _antiVirusIconPool.Length; i++) {
+            _availableAntivirusFiles.Add(_antiVirusIconPool[i]);
+        }
     }
 
     public FileController getFileOfType(FileController.FileType fileType) {
@@ -92,16 +100,31 @@ public class DesktopSystemManager : MonoBehaviour {
         }
 
         if (firstAvailableIndex < 0) {
-            Debug.Log("Desktop System Manager ran out of desktop space to place a file");
+            Debug.Log("Desktop System Manager ran out of desktop space to neatly place a file");
             SystemCrashHandler.SCH.crashSystem();
             return;
         }
 
-        _availableIndices.Remove(firstAvailableIndex);
-        _indicesAvailability[firstAvailableIndex] = false;
+        addFileAtIndex(file, firstAvailableIndex);
+    }
 
-        file.desktopPositionIndex = firstAvailableIndex;
-        file.transform.position = _desktopIconPlaceholders[firstAvailableIndex].position;
+    public void randomlyAddFile(FileController file) {
+        if (_availableIndices.Count <= 0) {
+            Debug.Log("Desktop System Manager ran out of desktop space to randomly place a file");
+            SystemCrashHandler.SCH.crashSystem();
+            return;
+        }
+
+        int chosenIndex = _availableIndices.ElementAt(UnityEngine.Random.Range(0, _availableIndices.Count));
+        addFileAtIndex(file, chosenIndex);
+    }
+
+    private void addFileAtIndex(FileController file, int chosenIndex) {
+        _availableIndices.Remove(chosenIndex);
+        _indicesAvailability[chosenIndex] = false;
+
+        file.desktopPositionIndex = chosenIndex;
+        file.transform.position = _desktopIconPlaceholders[chosenIndex].position;
         file.gameObject.SetActive(true);
 
         file.transform.SetParent(_activeFilePool);
@@ -121,11 +144,10 @@ public class DesktopSystemManager : MonoBehaviour {
 
     public void freeUpFile(FileController file) {
         if (file.desktopPositionIndex < 0) {
-        Debug.Log("Freeing up file with invalid " + file.desktopPositionIndex);
+            Debug.Log("Freeing up file with an invalid index: " + file.desktopPositionIndex);
             return;
         }
 
-        Debug.Log("Freeing up file " + file.desktopPositionIndex);
         _availableIndices.Add(file.desktopPositionIndex);
         _indicesAvailability[file.desktopPositionIndex] = true;
 
