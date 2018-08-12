@@ -33,6 +33,7 @@ public class ZipBombManager : MonoBehaviour {
             OnZipBombExecuted.Invoke(this, EventArgs.Empty);
         }
 
+        RecycleBinController.RBC.resetCounters();
         AntivirusManager.AM.startScanning();
         StartCoroutine(handleVirus());
     }

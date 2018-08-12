@@ -65,7 +65,6 @@ public class AntivirusManager : MonoBehaviour {
                 ZipBombManager.ZBM.killVirus();
                 //DataManager.logScore(ZipBombManager.ZBM.activeDuration);
                 //StartMenuController.SMC.clearAndRepopulateRecentScores();
-                //killAntivirus(); TODO: IS NEEDED>?!!?!??!
 
                 DesktopSystemManager.DSM.killVirusFiles();
                 RecycleBinController.RBC.tryEmptyRecycleBin();

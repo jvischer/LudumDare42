@@ -31,6 +31,12 @@ public class NotificationController : MonoBehaviour {
         RecycleBinController.OnRecycleBinFilled += recycleBinController_OnRecycleBinFilled;
     }
 
+    private void OnDestroy() {
+        AntivirusManager.OnAntivirusExecuted -= antivirusManager_OnAntivirusExecuted;
+        ZipBombManager.OnZipBombKilled -= zipBombManager_OnZipBombKilled;
+        RecycleBinController.OnRecycleBinFilled -= recycleBinController_OnRecycleBinFilled;
+    }
+
     private void antivirusManager_OnAntivirusExecuted(object sender, EventArgs e) {
         _notificationHeaderText.text = AppConsts.NOTIFICATION_ON_ANTIVIRUS_EXECUTED_HEADER;
         _notificationBodyText.text = AppConsts.NOTIFICATION_ON_ANTIVIRUS_EXECUTED_BODY;

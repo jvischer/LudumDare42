@@ -3907,13 +3907,13 @@ MonoBehaviour:
   - _spawnRampUpDuration: 60
     _initialMinSpawnDelay: 1.75
     _initialMaxSpawnDelay: 2
-    _endMinSpawnDelay: 1
-    _endMaxSpawnDelay: 1.1
+    _endMinSpawnDelay: 0.9
+    _endMaxSpawnDelay: 1
   - _spawnRampUpDuration: 60
     _initialMinSpawnDelay: 1.5
     _initialMaxSpawnDelay: 1.75
-    _endMinSpawnDelay: 0.75
-    _endMaxSpawnDelay: 0.85
+    _endMinSpawnDelay: 0.7
+    _endMaxSpawnDelay: 0.8
   - _spawnRampUpDuration: 60
     _initialMinSpawnDelay: 1.25
     _initialMaxSpawnDelay: 1.5
@@ -7614,7 +7614,7 @@ Prefab:
     - target: {fileID: 114093683622384422, guid: a84cbf0c4805ad44badfa429ffaa7da2,
         type: 2}
       propertyPath: m_Text
-      value: 42
+      value: 42.zip
       objectReference: {fileID: 0}
     - target: {fileID: 114919153599092014, guid: a84cbf0c4805ad44badfa429ffaa7da2,
         type: 2}
@@ -22754,17 +22754,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scanningVirusDuration: 10
   _difficultyData:
-  - _spawnRampUpDuration: 90
+  - _spawnRampUpDuration: 120
     _initialMinSpawnDelay: 5
     _initialMaxSpawnDelay: 5.5
     _endMinSpawnDelay: 2
     _endMaxSpawnDelay: 2.5
-  - _spawnRampUpDuration: 90
+  - _spawnRampUpDuration: 120
     _initialMinSpawnDelay: 4.5
     _initialMaxSpawnDelay: 5
     _endMinSpawnDelay: 2.25
     _endMaxSpawnDelay: 2.75
-  - _spawnRampUpDuration: 90
+  - _spawnRampUpDuration: 120
     _initialMinSpawnDelay: 4
     _initialMaxSpawnDelay: 4.5
     _endMinSpawnDelay: 2.5

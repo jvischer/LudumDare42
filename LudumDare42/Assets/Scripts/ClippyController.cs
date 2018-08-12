@@ -40,6 +40,12 @@ public class ClippyController : MonoBehaviour {
         StartCoroutine(queueClippyIntroConversation());
     }
 
+    private void OnDestroy() {
+        ZipBombManager.OnZipBombExecuted -= zipBombManager_OnZipBombExecuted;
+        ZipBombManager.OnZipBombKilled -= zipBombManager_OnZipBombKilled;
+        RecycleBinController.OnRecycleBinDestroyed -= recycleBinController_OnRecycleBinDestroyed;
+    }
+
     public void startConversation(ClippyConversation conversation) {
         _isMidConversation = false;
 

@@ -103,7 +103,18 @@ public class DesktopSystemManager : MonoBehaviour {
 
     public void tryReAddZipBomb() {
         if (_defaultIcons[1].wasFileDeleted) {
-            neatlyAddFile(_defaultIcons[1]);
+            StartCoroutine(keepTryingToReAddZipBomb());
+        }
+    }
+
+    private IEnumerator keepTryingToReAddZipBomb() {
+        while (true) {
+            if (RecycleBinController.RBC.isEmpty) {
+                neatlyAddFile(_defaultIcons[1]);
+                break;
+            }
+
+            yield return null;
         }
     }
 

@@ -64,9 +64,18 @@ public class RecycleBinController : FileController {
         _recycledFiles.Clear();
     }
 
+    public void resetCounters() {
+        _emptiedVirusFileCount = 0;
+        _emptiedAntivirusFileCount = 0;
+    }
+
     public void tryDeleteFile(FileController file) {
         if (canDeleteItems) {
-            _recycledFiles.Add(file);
+            // If it's an antivirus file and the zip bomb is no longer active, don't keep the file around
+            if (!(file.fileType == FileType.Antivirus && !ZipBombManager.ZBM.isVirusActive)) {
+                _recycledFiles.Add(file);
+            }
+
             file.gameObject.SetActive(false);
             DesktopSystemManager.DSM.freeUpFile(file);
 
@@ -95,6 +104,12 @@ public class RecycleBinController : FileController {
     public float fullnessMeterPercent {
         get {
             return Mathf.Clamp01((float) _recycledFiles.Count / _maxCapacity);
+        }
+    }
+
+    public bool isEmpty {
+        get {
+            return _recycledFiles.Count <= 0;
         }
     }
 

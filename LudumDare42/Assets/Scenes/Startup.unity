@@ -1569,7 +1569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00db8eb304b7e1a45ab73fc0b3b82e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minLoadTime: 5
+  _minLoadTime: 4
   _maxLoadTime: 6
   _loadPanel: {fileID: 1246463789}
   _minLoginTime: 1.75
@@ -2916,7 +2916,7 @@ GameObject:
   - component: {fileID: 2102132542}
   - component: {fileID: 2102132541}
   m_Layer: 5
-  m_Name: Text
+  m_Name: OS Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2972,7 +2972,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Aperature
+  m_Text: Aperature XP
 --- !u!222 &2102132542
 CanvasRenderer:
   m_ObjectHideFlags: 0
