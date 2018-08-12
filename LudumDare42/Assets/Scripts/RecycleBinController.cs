@@ -38,6 +38,9 @@ public class RecycleBinController : FileController {
                 case FileType.Antivirus:
                     _emptiedAntivirusFileCount++;
                     break;
+                case FileType.ZipBomb:
+                    AntivirusManager.AM.prepareToReAddZipBomb();
+                    break;
             }
         }
         _recycledFiles.Clear();
@@ -48,6 +51,11 @@ public class RecycleBinController : FileController {
             _recycledFiles.Add(file);
             file.gameObject.SetActive(false);
             DesktopSystemManager.DSM.freeUpFile(file);
+
+            // If the recycle bin is being deleted, empty it manually
+            if (file.fileType == FileType.RecycleBin) {
+                tryEmptyRecycleBin();
+            }
         }
     }
 

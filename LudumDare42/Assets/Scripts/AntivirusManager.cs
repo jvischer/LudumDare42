@@ -93,6 +93,14 @@ public class AntivirusManager : MonoBehaviour {
             yield return wfs;
         }
 
+        prepareToReAddZipBomb();
+    }
+
+    public void prepareToReAddZipBomb() {
+        StartCoroutine(handleReAddingZipBomb());
+    }
+
+    private IEnumerator handleReAddingZipBomb() {
         // Start countdown until next zip bomb file appears
         yield return new WaitForSeconds(_delayToSpawnNewZipBomb);
         DesktopSystemManager.DSM.tryReAddZipBomb();
