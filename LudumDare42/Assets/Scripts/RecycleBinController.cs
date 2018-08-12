@@ -39,7 +39,9 @@ public class RecycleBinController : FileController {
                     _emptiedAntivirusFileCount++;
                     break;
                 case FileType.ZipBomb:
-                    AntivirusManager.AM.prepareToReAddZipBomb();
+                    if (!ZipBombManager.ZBM.isVirusActive) {
+                        AntivirusManager.AM.prepareToReAddZipBomb();
+                    }
                     break;
             }
         }

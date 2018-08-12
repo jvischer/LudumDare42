@@ -7,6 +7,8 @@ public static class AppConsts {
 
     public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.5F;
 
+    public const float DESKTOP_MOVEMENT_NULLABLE_SQR_DISTANCE = 40.0F;
+
     public const int MISSING_FILE_ID = -1;
     public const int DEFAULT_FILE_ID = -2;
 

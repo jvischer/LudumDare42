@@ -9,7 +9,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform), typeof(Animator))]
 public class FileController : MonoBehaviour {
 
-    public static int lastClickedFile = AppConsts.MISSING_FILE_ID;
+    public static int LastClickedFile = AppConsts.MISSING_FILE_ID;
 
     [SerializeField] protected RectTransform _clickBoxRectTransform;
     [SerializeField] protected FileOption[] _fileOptions;
@@ -123,29 +123,45 @@ public class FileController : MonoBehaviour {
         _fileNameText.text = name;
     }
 
+    private bool _wasSelectedBeforeClick = false;
+
     public void clickFile(BaseEventData baseEventData) {
         PointerEventData pointerEventData = baseEventData as PointerEventData;
 
         DropdownController.DC.hideDropdown();
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
+            Debug.Log("Last clicked file " + LastClickedFile + " w/ " + fileID);
             // Handle lmb
-            if (lastClickedFile == fileID) {
-                // Handle double click on item
-                onDoubleClick();
-            } else {
+            _wasSelectedBeforeClick = _isSelected;
+            if (!_isSelected) {
                 // Replace the last clicked file
                 FileSystemManager.FSM.deselectLastClickedFile();
-                lastClickedFile = fileID;
+                LastClickedFile = fileID;
+
+                DragController.DC.clearCache();
+                //DragController.DC.updateSelectedFileCache();
             }
+
+            //if (LastClickedFile == fileID) {
+            //    // Handle double click on item
+            //    onDoubleClick();
+            //} else {
+            //    // Replace the last clicked file
+            //    FileSystemManager.FSM.deselectLastClickedFile();
+            //    LastClickedFile = fileID;
+
+            //    DragController.DC.clearCache();
+            //    //DragController.DC.updateSelectedFileCache();
+            //}
 
             transform.SetAsLastSibling();
             DragController.DC.startSelectionFollowingMouse();
         } else if (pointerEventData.button == PointerEventData.InputButton.Right) {
             // Handle rmb
-            if (lastClickedFile != fileID) {
+            if (LastClickedFile != fileID) {
                 // Replace the last clicked file
                 FileSystemManager.FSM.deselectLastClickedFile();
-                lastClickedFile = fileID;
+                LastClickedFile = fileID;
             }
 
             // Open right click options relative to the file based on the file's data
@@ -159,11 +175,43 @@ public class FileController : MonoBehaviour {
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
             DragController.DC.stopSelectionFollowingMouse();
 
-            // Is it above the recycle bin and holding a file that isn't the recycle bin
-            FileController file;
-            if (RecycleBinController.RBC.isMouseHovering &&
-                FileSystemManager.FSM.tryGetFileWithID(lastClickedFile, out file) && !(file is RecycleBinController)) {
-                file.tryDelete();
+            // If the file was already selected AND is now AND the mouse barely moved
+            if (_wasSelectedBeforeClick && _isSelected &&
+                (pointerEventData.position - pointerEventData.pressPosition).sqrMagnitude < AppConsts.DESKTOP_MOVEMENT_NULLABLE_SQR_DISTANCE) {
+                // Handle double click on item
+                onDoubleClick();
+            }
+
+            if (!_wasSelectedBeforeClick && _isSelected) {
+                DragController.DC.clearCache();
+            }
+
+            // BLOCK WAS MOVED FROM CLICK FILE. INSTEAD ACT ON A MIN TIME FOR RELEASE
+            //if ((pointerEventData.position - pointerEventData.pressPosition).sqrMagnitude < 50.0F) {
+            //    // Replace the last clicked file
+            //    FileSystemManager.FSM.deselectLastClickedFile();
+            //    lastClickedFile = fileID;
+
+            //    DragController.DC.clearCache();
+            //    DragController.DC.updateSelectedFileCache();
+            //}
+
+            // Is it above the recycle bin and holding files that aren't the recycle bin
+            if (RecycleBinController.RBC.isMouseHovering) {
+                bool canDeleteFiles = true;
+                List<FileController> selectedFiles = DragController.DC.selectedFiles;
+                for (int i = 0; i < selectedFiles.Count; i++) {
+                    if (selectedFiles[i].fileType == FileType.RecycleBin) {
+                        canDeleteFiles = false;
+                        break;
+                    }
+                }
+
+                if (canDeleteFiles) {
+                    for (int i = 0; i < selectedFiles.Count; i++) {
+                        selectedFiles[i].tryDelete();
+                    }
+                }
             }
         }
     }
@@ -228,7 +276,7 @@ public class FileController : MonoBehaviour {
 
     public bool wasFileClicked {
         get {
-            return lastClickedFile == fileID;
+            return LastClickedFile == fileID;
         }
     }
 

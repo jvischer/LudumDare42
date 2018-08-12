@@ -25,6 +25,12 @@ public class FileSystemManager : MonoBehaviour {
         _managedFiles.Remove(file.fileID);
     }
 
+    public FileController getLastClickedFile() {
+        FileController file;
+        tryGetFileWithID(FileController.LastClickedFile, out file);
+        return file;
+    }
+
     public List<FileController> getAllSelectedFiles(float minX, float maxX, float minY, float maxY) {
         List<FileController> selectedFiles = new List<FileController>();
 
@@ -55,7 +61,7 @@ public class FileSystemManager : MonoBehaviour {
 
     public void deselectLastClickedFile() {
         FileController file;
-        if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
+        if (FileSystemManager.FSM.tryGetFileWithID(FileController.LastClickedFile, out file)) {
             file.tryDeselectFile();
         }
     }

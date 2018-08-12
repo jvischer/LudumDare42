@@ -30,12 +30,13 @@ public class DragController : MonoBehaviour {
         handleInput();
         updateSelection();
         moveDraggedFiles();
+        updateCacheVisuals();
     }
 
     private void updateSelection() {
         if (!_isDragging) {
             FileController file;
-            if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
+            if (FileSystemManager.FSM.tryGetFileWithID(FileController.LastClickedFile, out file)) {
                 file.trySelectFile();
             }
         } else {
@@ -80,7 +81,7 @@ public class DragController : MonoBehaviour {
         }
     }
 
-    private void updateSelectedFileCache() {
+    public void updateSelectedFileCache() {
         float minX = Mathf.Min(Input.mousePosition.x, _startPos.x);
         float minY = Mathf.Min(Input.mousePosition.y, _startPos.y);
         float maxX = Mathf.Max(Input.mousePosition.x, _startPos.x);
@@ -93,6 +94,20 @@ public class DragController : MonoBehaviour {
         }
     }
 
+    public void clearCache() {
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            _cachedSelectedFiles[i].tryDeselectFile();
+        }
+
+        FileController selectedFile = FileSystemManager.FSM.getLastClickedFile();
+        if (selectedFile == null) {
+            _cachedSelectedFiles.Clear();
+        } else {
+            _cachedSelectedFiles = new List<FileController>() { selectedFile };
+            selectedFile.trySelectFile();
+        }
+    }
+
     public void startDesktopDrag() {
         _startPos = Input.mousePosition;
         _isDragging = true;
@@ -102,7 +117,7 @@ public class DragController : MonoBehaviour {
         _leftDragLine.gameObject.SetActive(true);
         _rightDragLine.gameObject.SetActive(true);
 
-        FileController.lastClickedFile = AppConsts.MISSING_FILE_ID;
+        FileController.LastClickedFile = AppConsts.MISSING_FILE_ID;
         FileSystemManager.FSM.deselectAllFiles();
         DropdownController.DC.hideDropdown();
     }
@@ -119,7 +134,7 @@ public class DragController : MonoBehaviour {
     private void handleInput() {
         if ((Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace)) && !_isDragging) {
             FileController file;
-            if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
+            if (FileSystemManager.FSM.tryGetFileWithID(FileController.LastClickedFile, out file)) {
                 file.tryDelete();
             }
 
@@ -131,7 +146,7 @@ public class DragController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             stopDesktopDrag();
 
-            FileController.lastClickedFile = AppConsts.MISSING_FILE_ID;
+            FileController.LastClickedFile = AppConsts.MISSING_FILE_ID;
             FileSystemManager.FSM.deselectAllFiles();
             DropdownController.DC.hideDropdown();
         }
@@ -141,9 +156,10 @@ public class DragController : MonoBehaviour {
         _isDraggingFiles = true;
         _startPos = Input.mousePosition;
 
-        updateSelectedFileCache();
+        //updateSelectedFileCache();
 
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            Debug.Log("Starting file following mouse " + _cachedSelectedFiles[i].name);
             _cachedSelectedFiles[i].startFollowMouse();
         }
     }
@@ -165,6 +181,18 @@ public class DragController : MonoBehaviour {
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
             // TODO: Set to true if released over the desktop or another file (use tags)
             _cachedSelectedFiles[i].stopFollowMouse(false);
+        }
+    }
+
+    private void updateCacheVisuals() {
+        for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+            _cachedSelectedFiles[i].trySelectFile();
+        }
+    }
+
+    public List<FileController> selectedFiles {
+        get {
+            return _cachedSelectedFiles;
         }
     }
 
