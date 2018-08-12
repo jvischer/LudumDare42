@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,17 +27,19 @@ public class ClippyController : MonoBehaviour {
     private Animator _animator;
     private ClippyConversation _currentConversation;
     private bool _isMidConversation = false;
+    private bool _canPlayIntroConversation = true;
 
     private void Awake() {
         CC = this;
 
         _animator = gameObject.GetComponent<Animator>();
+
+        ZipBombManager.OnZipBombExecuted += zipBombManager_OnZipBombExecuted;
+        StartCoroutine(queueClippyIntroConversation());
     }
 
     public void startConversation(ClippyConversation conversation) {
-        if (_isMidConversation) {
-            return;
-        }
+        _isMidConversation = false;
 
         _currentConversation = conversation;
         progressConversation(0);
@@ -91,6 +94,46 @@ public class ClippyController : MonoBehaviour {
         }
 
         progressConversation(_currentConversation.noResponseIndexChange);
+    }
+
+    private void zipBombManager_OnZipBombExecuted(object sender, EventArgs e) {
+        _canPlayIntroConversation = false;
+        StartCoroutine(queueClippyZipBombConversation());
+    }
+
+    private IEnumerator queueClippyIntroConversation() {
+        yield return new WaitForSeconds(AppConsts.CLIPPY_INTRO_CONVERSATION_DELAY);
+        if (_canPlayIntroConversation) {
+            ClippyController.CC.startConversation(new ClippyConversation(
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO, null, 0, null, 1),
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO_RESPONSE_YES, null, 1),
+                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_RESPONSE_NO, null, 0)
+            ));
+        }
+    }
+
+    private IEnumerator queueClippyZipBombConversation() {
+        yield return new WaitForSeconds(AppConsts.CLIPPY_ZIP_BOMB_CONVERSATION_DELAY);
+        ClippyController.CC.startConversation(new ClippyConversation(
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED, null, 0, null, 1),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED_RESPONSE_YES, null, 1),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_RESPONSE_NO, onFinishedClippyZipBombConversation, 4),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_2, null, 0),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_3, null, 0),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_4, null, 0),
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_5, onFinishedClippyZipBombConversation, 0)
+        ));
+    }
+
+    private void onFinishedClippyZipBombConversation() {
+        StartCoroutine(queueClippyPostZipBombHelpConversation());
+    }
+
+    private IEnumerator queueClippyPostZipBombHelpConversation() {
+        yield return new WaitForSeconds(AppConsts.CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY);
+        ClippyController.CC.startConversation(new ClippyConversation(
+            new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_HELP, null, 0)
+        ));
     }
 
 }

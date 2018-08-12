@@ -8,6 +8,10 @@ public static class AppConsts {
     public const int MISSING_FILE_ID = -1;
     public const int DEFAULT_FILE_ID = -2;
 
+    public const float CLIPPY_INTRO_CONVERSATION_DELAY = 6.0F;
+    public const float CLIPPY_ZIP_BOMB_CONVERSATION_DELAY = 2.5F;
+    public const float CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY = 60.0F;
+
     /// <summary>
     /// Yes/No
     /// </summary>
@@ -22,6 +26,31 @@ public static class AppConsts {
     /// Yes/No
     /// </summary>
     public const string CLIPPY_TEXT_UNZIPPED = "It looks like you have opened a zip bomb! Would you like some assistance?";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_UNZIPPED_RESPONSE_YES = "Drag and drop files into the recycle bin to clear space on your drive.";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_2 = "Click and drag let's you delete multiple files at once. You can also right click to delete files!";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_3 = "The recycle bin will need to be cleared regularly. Don't let it or your drive fill up!";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_4 = "Try not to delete antivirus files as they are created, they will slow the virus down!";
+
+    /// <summary>
+    /// Okay
+    /// </summary>
+    public const string CLIPPY_TEXT_UNZIPPED_RESPONSE_YES_5 = "If half of your drive is made up of antiviruses then you will kill the virus!";
 
     /// <summary>
     /// Okay

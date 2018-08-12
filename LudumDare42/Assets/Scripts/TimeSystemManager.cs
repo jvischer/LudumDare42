@@ -27,6 +27,10 @@ public class TimeSystemManager : MonoBehaviour {
         _lastDisplayedMinute = timeToShow.Minute;
 
         bool isAM = _lastDisplayedHour == 24 || _lastDisplayedHour < 12 ? true : false;
+        if (_lastDisplayedHour == 0) {
+            _lastDisplayedHour = 12;
+        }
+
         _timeText.text = String.Format(isAM ? AM_FORMAT : PM_FORMAT, (_lastDisplayedHour > 12 ? _lastDisplayedHour - 12 : _lastDisplayedHour), _lastDisplayedMinute.ToString("00"));
     }
 

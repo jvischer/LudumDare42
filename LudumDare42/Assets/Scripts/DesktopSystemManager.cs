@@ -176,31 +176,11 @@ public class DesktopSystemManager : MonoBehaviour {
         _backgroundImage.sprite = _desktopBGOptions[_currentDesktopBG];
     }
 
-    private void Update() {
+    //private void Update() {
         //if (Input.GetKeyDown(KeyCode.LeftWindows) || Input.GetKeyDown(KeyCode.RightWindows)) {
         //    // TODO: Alternate way to click the start button IF necessary
         //}
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt)) {
-            ClippyController.CC.startConversation(new ClippyConversation(
-                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO, yes, 0, no, 1),
-                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_INTRO_RESPONSE_YES, okay, 1),
-                new ClippyConversationFrame(AppConsts.CLIPPY_TEXT_RESPONSE_NO, okay, 0)
-            ));
-        }
-    }
-
-    private void okay() {
-        Debug.Log("okay");
-    }
-
-    private void yes() {
-        Debug.Log("yes");
-    }
-
-    private void no() {
-        Debug.Log("no");
-    }
+    //}
 
     public FileOption[] desktopOptions {
         get {

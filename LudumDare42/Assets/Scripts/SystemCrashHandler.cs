@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SystemCrashHandler : MonoBehaviour {
 
@@ -21,7 +22,7 @@ public class SystemCrashHandler : MonoBehaviour {
 
     private IEnumerator killSystemIn(float duration) {
         yield return new WaitForSeconds(duration);
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 
 }

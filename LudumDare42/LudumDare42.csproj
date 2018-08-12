@@ -347,6 +347,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\AntivirusManager.cs" />
     <Compile Include="Assets\Scripts\AppConsts.cs" />
     <Compile Include="Assets\Scripts\ClippyController.cs" />
     <Compile Include="Assets\Scripts\DesktopSystemManager.cs" />
@@ -355,7 +356,10 @@
     <Compile Include="Assets\Scripts\DropdownOptionController.cs" />
     <Compile Include="Assets\Scripts\FileController.cs" />
     <Compile Include="Assets\Scripts\FileSystemManager.cs" />
+    <Compile Include="Assets\Scripts\NotificationController.cs" />
+    <Compile Include="Assets\Scripts\ProgressBarLoopController.cs" />
     <Compile Include="Assets\Scripts\RecycleBinController.cs" />
+    <Compile Include="Assets\Scripts\StartupSceneController.cs" />
     <Compile Include="Assets\Scripts\SystemCrashHandler.cs" />
     <Compile Include="Assets\Scripts\TimeSystemManager.cs" />
     <Compile Include="Assets\Scripts\ZipBombManager.cs" />

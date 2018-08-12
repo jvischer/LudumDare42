@@ -76,9 +76,14 @@ public class FileController : MonoBehaviour {
     }
 
     public void tryUnzip() {
-        ZipBombManager.ZBM.executeVirus();
-        // TODO: Display loading bar before deleting the file, while initial files are spawning
-        tryDelete();
+        if (!ZipBombManager.ZBM.isVirusActive) {
+            ZipBombManager.ZBM.executeVirus();
+            // TODO: Display loading bar before deleting the file, while initial files are spawning
+            tryDelete();
+        } else {
+            //TODO: Duplicate the file before deleting
+            tryDelete();
+        }
     }
 
     public virtual void tryRestoreContents() {
@@ -111,7 +116,7 @@ public class FileController : MonoBehaviour {
             // Handle lmb
             if (lastClickedFile == fileID) {
                 // Handle double click on item
-                Debug.Log("DOUBLE CLICK ON FILE " + fileID);
+                onDoubleClick();
             } else {
                 // Replace the last clicked file
                 FileSystemManager.FSM.deselectLastClickedFile();
@@ -145,6 +150,14 @@ public class FileController : MonoBehaviour {
                 FileSystemManager.FSM.tryGetFileWithID(lastClickedFile, out file) && !(file is RecycleBinController)) {
                 file.tryDelete();
             }
+        }
+    }
+
+    private void onDoubleClick() {
+        Debug.Log("DOUBLE CLICK ON FILE " + fileID);
+        if (fileType == FileType.ZipBomb ||
+            fileType == FileType.Virus) {
+            tryUnzip();
         }
     }
 
@@ -211,7 +224,7 @@ public class FileController : MonoBehaviour {
     }
 
     public enum FileType {
-        Default, Virus, Antivirus,
+        Default, RecycleBin, ZipBomb, Virus, Antivirus,
     }
 
     private enum FileAction {
