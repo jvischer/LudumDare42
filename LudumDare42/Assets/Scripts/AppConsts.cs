@@ -5,15 +5,17 @@ using System.Text;
 
 public static class AppConsts {
 
-    public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.05F;
+    public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.5F;
 
     public const int MISSING_FILE_ID = -1;
     public const int DEFAULT_FILE_ID = -2;
 
     public const float CLIPPY_INTRO_CONVERSATION_DELAY = 6.0F;
     public const float CLIPPY_ZIP_BOMB_CONVERSATION_DELAY = 2.5F;
-    public const float CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY = 60.0F;
+    public const float CLIPPY_POST_ZIP_BOMB_HELP_CONVERSATION_DELAY = 45.0F;
     public const float CLIPPY_SCORE_CONVERSATION_DELAY = 1.0F;
+
+    public const float FILE_UNZIP_DURATION = 1.5F;
 
     public const string FILE_NAME_VIRUS_FMT = "lib {0}.zip";
     public const string FILE_NAME_ANTIVIRUS_FMT = "api-win-core l1-{0}.dll";

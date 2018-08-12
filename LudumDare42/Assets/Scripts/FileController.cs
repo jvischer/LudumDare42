@@ -77,12 +77,21 @@ public class FileController : MonoBehaviour {
     }
 
     public void tryUnzip() {
+        StartCoroutine(handleUnzip());
+    }
+
+    private IEnumerator handleUnzip() {
+        UnzipController.UC.displayForFile(this);
+        yield return new WaitForSeconds(AppConsts.FILE_UNZIP_DURATION);
+
         if (!ZipBombManager.ZBM.isVirusActive) {
             ZipBombManager.ZBM.executeVirus();
-            // TODO: Display loading bar before deleting the file, while initial files are spawning
             tryDelete();
         } else {
-            //TODO: Duplicate the file before deleting
+            FileController newFile = DesktopSystemManager.DSM.getFileOfType(FileType.Virus);
+            if (newFile != null) {
+                DesktopSystemManager.DSM.randomlyAddFile(newFile);
+            }
             tryDelete();
         }
     }

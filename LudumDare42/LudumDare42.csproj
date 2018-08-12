@@ -362,6 +362,7 @@
     <Compile Include="Assets\Scripts\StartupSceneController.cs" />
     <Compile Include="Assets\Scripts\SystemCrashHandler.cs" />
     <Compile Include="Assets\Scripts\TimeSystemManager.cs" />
+    <Compile Include="Assets\Scripts\UnzipController.cs" />
     <Compile Include="Assets\Scripts\ZipBombManager.cs" />
   </ItemGroup>
   <ItemGroup>
