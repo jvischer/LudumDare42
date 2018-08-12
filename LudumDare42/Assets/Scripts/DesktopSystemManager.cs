@@ -31,7 +31,9 @@ public class DesktopSystemManager : MonoBehaviour {
     private HashSet<int> _availableIndices = new HashSet<int>();
 
     private HashSet<FileController> _availableVirusFiles = new HashSet<FileController>();
+    private HashSet<FileController> _activeVirusFiles = new HashSet<FileController>();
     private HashSet<FileController> _availableAntivirusFiles = new HashSet<FileController>();
+    private HashSet<FileController> _activeAntivirusFiles = new HashSet<FileController>();
 
     private int _currentDesktopBG = 0;
 
@@ -133,11 +135,13 @@ public class DesktopSystemManager : MonoBehaviour {
         file.tryDeselectFile();
 
         switch (file.fileType) {
-            case FileController.FileType.Antivirus:
-                _availableAntivirusFiles.Remove(file);
-                break;
             case FileController.FileType.Virus:
                 _availableVirusFiles.Remove(file);
+                _activeVirusFiles.Add(file);
+                break;
+            case FileController.FileType.Antivirus:
+                _availableAntivirusFiles.Remove(file);
+                _activeAntivirusFiles.Add(file);
                 break;
         }
     }
@@ -152,12 +156,21 @@ public class DesktopSystemManager : MonoBehaviour {
         _indicesAvailability[file.desktopPositionIndex] = true;
 
         switch (file.fileType) {
-            case FileController.FileType.Antivirus:
-                _availableAntivirusFiles.Add(file);
-                break;
             case FileController.FileType.Virus:
                 _availableVirusFiles.Add(file);
+                _activeVirusFiles.Remove(file);
                 break;
+            case FileController.FileType.Antivirus:
+                _availableAntivirusFiles.Add(file);
+                _activeAntivirusFiles.Remove(file);
+                break;
+        }
+    }
+
+    public void killVirusFiles() {
+        FileController[] filesToKill = _activeVirusFiles.ToArray<FileController>();
+        for (int i = 0; i < filesToKill.Length; i++) {
+            filesToKill[i].tryDelete();
         }
     }
 
@@ -185,6 +198,24 @@ public class DesktopSystemManager : MonoBehaviour {
     public FileOption[] desktopOptions {
         get {
             return _desktopOptions;
+        }
+    }
+
+    public int activeVirusFileCount {
+        get {
+            return _activeVirusFiles.Count;
+        }
+    }
+
+    public int activeAntivirusFileCount {
+        get {
+            return _activeAntivirusFiles.Count;
+        }
+    }
+
+    public int desktopIconSpace {
+        get {
+            return _desktopIconPlaceholders.Length;
         }
     }
 

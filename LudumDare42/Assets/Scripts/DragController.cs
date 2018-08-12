@@ -117,7 +117,7 @@ public class DragController : MonoBehaviour {
     }
 
     private void handleInput() {
-        if (Input.GetKeyDown(KeyCode.Delete) && !_isDragging) {
+        if ((Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.Backspace)) && !_isDragging) {
             FileController file;
             if (FileSystemManager.FSM.tryGetFileWithID(FileController.lastClickedFile, out file)) {
                 file.tryDelete();

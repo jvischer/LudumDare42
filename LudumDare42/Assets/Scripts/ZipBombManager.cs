@@ -8,7 +8,8 @@ public class ZipBombManager : MonoBehaviour {
     public static ZipBombManager ZBM;
 
     public static EventHandler OnZipBombExecuted;
-
+    public static EventHandler OnZipBombKilled;
+    
     [SerializeField] private float _spawnRampUpDuration;
     [SerializeField] private float _initialMinSpawnDelay;
     [SerializeField] private float _initialMaxSpawnDelay;
@@ -33,6 +34,10 @@ public class ZipBombManager : MonoBehaviour {
     }
 
     public void killVirus() {
+        if (OnZipBombKilled != null) {
+            OnZipBombKilled.Invoke(this, EventArgs.Empty);
+        }
+
         StopAllCoroutines();
     }
 

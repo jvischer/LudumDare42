@@ -5,6 +5,8 @@ using System.Text;
 
 public static class AppConsts {
 
+    public const float PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS = 0.05F;
+
     public const int MISSING_FILE_ID = -1;
     public const int DEFAULT_FILE_ID = -2;
 
@@ -58,5 +60,10 @@ public static class AppConsts {
     public const string CLIPPY_TEXT_HELP = "Please stop the virus! It's hurting me!";
 
     public const string CLIPPY_TEXT_RESPONSE_NO = "Okay. Have a nice day!";
+
+    public const string NOTIFICATION_ON_ANTIVIRUS_EXECUTED_HEADER = "Virus detected!";
+    public const string NOTIFICATION_ON_ANTIVIRUS_EXECUTED_BODY = "Starting all defense processes.";
+    public const string NOTIFICATION_ON_ZIP_BOMB_KILLED_HEADER = "Virus killed!";
+    public const string NOTIFICATION_ON_ZIP_BOMB_KILLED_BODY = "All virus processes have been killed.";
 
 }

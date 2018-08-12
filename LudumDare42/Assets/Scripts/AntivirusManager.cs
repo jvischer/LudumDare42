@@ -57,6 +57,16 @@ public class AntivirusManager : MonoBehaviour {
                 DesktopSystemManager.DSM.randomlyAddFile(newFile);
             }
 
+            // Check if the win condition has been met
+            if (DesktopSystemManager.DSM.activeAntivirusFileCount >= DesktopSystemManager.DSM.desktopIconSpace * AppConsts.PERCENT_OF_FILES_AS_ANTIVIRUS_TO_KILL_THE_VIRUS) {
+                ZipBombManager.ZBM.killVirus();
+                killAntivirus();
+
+                DesktopSystemManager.DSM.killVirusFiles();
+                RecycleBinController.RBC.tryEmptyRecycleBin();
+                break;
+            }
+
             float progress = Mathf.Clamp01(time / _spawnRampUpDuration);
             float minSpawnDelayDelta = _endMinSpawnDelay - _initialMinSpawnDelay;
             float maxSpawnDelayDelta = _endMaxSpawnDelay - _initialMaxSpawnDelay;
