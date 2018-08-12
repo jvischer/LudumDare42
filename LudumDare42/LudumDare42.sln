@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LudumDare42", "LudumDare42.csproj", "{E65E5686-2E94-5637-3489-E569945DC1EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LudumDare42.Editor", "LudumDare42.Editor.csproj", "{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LudumDare42.Editor", "LudumDare42.Editor.csproj", "{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LudumDare42.Editor", "LudumDare42.Editor.csproj", "{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}"
 EndProject
@@ -23,16 +21,11 @@ Global
 		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5CBC59A-88C3-4DF1-8011-8D99569D7D8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C768522-3402-4B08-80C1-83F51FF961C9}
 	EndGlobalSection
 EndGlobal

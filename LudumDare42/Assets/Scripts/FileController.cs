@@ -130,7 +130,6 @@ public class FileController : MonoBehaviour {
 
         DropdownController.DC.hideDropdown();
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
-            Debug.Log("Last clicked file " + LastClickedFile + " w/ " + fileID);
             // Handle lmb
             _wasSelectedBeforeClick = _isSelected;
             if (!_isSelected) {
@@ -139,20 +138,7 @@ public class FileController : MonoBehaviour {
                 LastClickedFile = fileID;
 
                 DragController.DC.clearCache();
-                //DragController.DC.updateSelectedFileCache();
             }
-
-            //if (LastClickedFile == fileID) {
-            //    // Handle double click on item
-            //    onDoubleClick();
-            //} else {
-            //    // Replace the last clicked file
-            //    FileSystemManager.FSM.deselectLastClickedFile();
-            //    LastClickedFile = fileID;
-
-            //    DragController.DC.clearCache();
-            //    //DragController.DC.updateSelectedFileCache();
-            //}
 
             transform.SetAsLastSibling();
             DragController.DC.startSelectionFollowingMouse();
@@ -173,7 +159,7 @@ public class FileController : MonoBehaviour {
         PointerEventData pointerEventData = baseEventData as PointerEventData;
 
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
-            DragController.DC.stopSelectionFollowingMouse();
+            DragController.DC.stopSelectionFollowingMouse(pointerEventData);
 
             // If the file was already selected AND is now AND the mouse barely moved
             if (_wasSelectedBeforeClick && _isSelected &&
@@ -182,19 +168,10 @@ public class FileController : MonoBehaviour {
                 onDoubleClick();
             }
 
+            // If the file was just selected
             if (!_wasSelectedBeforeClick && _isSelected) {
                 DragController.DC.clearCache();
             }
-
-            // BLOCK WAS MOVED FROM CLICK FILE. INSTEAD ACT ON A MIN TIME FOR RELEASE
-            //if ((pointerEventData.position - pointerEventData.pressPosition).sqrMagnitude < 50.0F) {
-            //    // Replace the last clicked file
-            //    FileSystemManager.FSM.deselectLastClickedFile();
-            //    lastClickedFile = fileID;
-
-            //    DragController.DC.clearCache();
-            //    DragController.DC.updateSelectedFileCache();
-            //}
 
             // Is it above the recycle bin and holding files that aren't the recycle bin
             if (RecycleBinController.RBC.isMouseHovering) {
@@ -242,9 +219,10 @@ public class FileController : MonoBehaviour {
 
             if (trySnapToGrid) {
                 // Find a new nearest unoccupied location
-                Debug.Log("TODO: Find the new location for the file!");
-                // TODO: Remove snap below, it's just to prevent visual issues for now
-                transform.position = _posBeforeFollowingMouse;
+                if (!DesktopSystemManager.DSM.trySnapToNearestPlaceholder(this)) {
+                    // Return to the previous location
+                    transform.position = _posBeforeFollowingMouse;
+                }
             } else {
                 // Return to the previous location
                 transform.position = _posBeforeFollowingMouse;

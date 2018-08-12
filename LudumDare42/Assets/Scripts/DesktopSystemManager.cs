@@ -24,10 +24,14 @@ public class DesktopSystemManager : MonoBehaviour {
     [SerializeField] private FileController[] _virusIconPool;
     [SerializeField] private FileController[] _antiVirusIconPool;
 
+    [Space]
+
+    [SerializeField] private IconToggleManager _audioToggleManager;
+
     private Image _backgroundImage;
     private RectTransform[] _desktopIconPlaceholders;
 
-    private bool[] _indicesAvailability;
+    private bool[] _indexIsAvailable;
     private HashSet<int> _availableIndices = new HashSet<int>();
 
     private HashSet<FileController> _availableVirusFiles = new HashSet<FileController>();
@@ -43,23 +47,28 @@ public class DesktopSystemManager : MonoBehaviour {
         DSM = this;
 
         _backgroundImage = gameObject.GetComponent<Image>();
+
+        bool isAudioEnabled;
+        if (DataManager.tryGetBool(AppConsts.DATA_AUDIO_KEY, out isAudioEnabled)) {
+            _audioToggleManager.initialize(isAudioEnabled);
+        }
     }
 
     private IEnumerator Start() {
         yield return null;
         
         _desktopIconPlaceholders = new RectTransform[transform.childCount];
-        _indicesAvailability = new bool[transform.childCount];
+        _indexIsAvailable = new bool[transform.childCount];
         for (int i = 0; i < _desktopIconPlaceholders.Length; i++) {
             _desktopIconPlaceholders[i] = transform.GetChild(i).GetComponent<RectTransform>();
-            _indicesAvailability[i] = true;
+            _indexIsAvailable[i] = true;
 
             _availableIndices.Add(i);
         }
 
         for (int i = 0; i < _defaultIcons.Length; i++) {
             _availableIndices.Remove(i);
-            _indicesAvailability[i] = false;
+            _indexIsAvailable[i] = false;
 
             _defaultIcons[i].desktopPositionIndex = i;
             _defaultIcons[i].transform.position = _desktopIconPlaceholders[i].position;
@@ -76,6 +85,22 @@ public class DesktopSystemManager : MonoBehaviour {
         for (int i = 0; i < _antiVirusIconPool.Length; i++) {
             _availableAntivirusFiles.Add(_antiVirusIconPool[i]);
         }
+    }
+
+    private void OnApplicationPause(bool pause) {
+        Debug.Log("Paused");
+        serializeAndSaveData();
+    }
+
+    private void OnApplicationQuit() {
+        Debug.Log("Quit");
+        serializeAndSaveData();
+    }
+
+    private void serializeAndSaveData() {
+        DataManager.setBool(AppConsts.DATA_AUDIO_KEY, _audioToggleManager.status);
+
+        DataManager.save();
     }
 
     public void tryReAddZipBomb() {
@@ -102,8 +127,8 @@ public class DesktopSystemManager : MonoBehaviour {
 
     public void neatlyAddFile(FileController file) {
         int firstAvailableIndex = -1;
-        for (int i = 0; i < _indicesAvailability.Length; i++) {
-            if (_indicesAvailability[i]) {
+        for (int i = 0; i < _indexIsAvailable.Length; i++) {
+            if (_indexIsAvailable[i]) {
                 firstAvailableIndex = i;
                 break;
             }
@@ -131,7 +156,7 @@ public class DesktopSystemManager : MonoBehaviour {
 
     private void addFileAtIndex(FileController file, int chosenIndex) {
         _availableIndices.Remove(chosenIndex);
-        _indicesAvailability[chosenIndex] = false;
+        _indexIsAvailable[chosenIndex] = false;
 
         file.desktopPositionIndex = chosenIndex;
         file.transform.position = _desktopIconPlaceholders[chosenIndex].position;
@@ -165,7 +190,7 @@ public class DesktopSystemManager : MonoBehaviour {
         }
 
         _availableIndices.Add(file.desktopPositionIndex);
-        _indicesAvailability[file.desktopPositionIndex] = true;
+        _indexIsAvailable[file.desktopPositionIndex] = true;
 
         switch (file.fileType) {
             case FileController.FileType.Virus:
@@ -177,6 +202,36 @@ public class DesktopSystemManager : MonoBehaviour {
                 _activeAntivirusFiles.Remove(file);
                 break;
         }
+    }
+
+    public bool trySnapToNearestPlaceholder(FileController file) {
+        Vector3 filePos = file.transform.position;
+        float closestPlaceholderSqrDistance = float.MaxValue;
+        int desktopIconPlaceholderIndex = -1;
+        for (int i = 0; i < _desktopIconPlaceholders.Length; i++) {
+            // Pick the closest icon
+            float currPlaceholderSqrDistance = (_desktopIconPlaceholders[i].position - filePos).sqrMagnitude;
+            if (desktopIconPlaceholderIndex < 0 ||
+                currPlaceholderSqrDistance < closestPlaceholderSqrDistance) {
+                closestPlaceholderSqrDistance = currPlaceholderSqrDistance;
+                desktopIconPlaceholderIndex = i;
+            }
+        }
+        
+        // If nothing was selected OR the index is not available
+        if (desktopIconPlaceholderIndex < 0 ||
+            !_indexIsAvailable[desktopIconPlaceholderIndex]) {
+            return false;
+        }
+
+        // Update the position
+        file.transform.position = _desktopIconPlaceholders[desktopIconPlaceholderIndex].position;
+
+        // Free up the previous index and write over it
+        _indexIsAvailable[file.desktopPositionIndex] = true;
+        file.desktopPositionIndex = desktopIconPlaceholderIndex;
+        _indexIsAvailable[desktopIconPlaceholderIndex] = false;
+        return true;
     }
 
     public void killVirusFiles() {
@@ -211,11 +266,15 @@ public class DesktopSystemManager : MonoBehaviour {
         _backgroundImage.sprite = _desktopBGOptions[_currentDesktopBG];
     }
 
-    //private void Update() {
-        //if (Input.GetKeyDown(KeyCode.LeftWindows) || Input.GetKeyDown(KeyCode.RightWindows)) {
-        //    // TODO: Alternate way to click the start button IF necessary
-        //}
-    //}
+    public void toggleStartMenu() {
+        StartMenuController.SMC.toggleStartMenu();
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.LeftWindows) || Input.GetKeyDown(KeyCode.RightWindows)) {
+            toggleStartMenu();
+        }
+    }
 
     public FileOption[] desktopOptions {
         get {

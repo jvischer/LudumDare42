@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragController : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class DragController : MonoBehaviour {
 	[SerializeField] private RectTransform _botDragLine;
 	[SerializeField] private RectTransform _leftDragLine;
 	[SerializeField] private RectTransform _rightDragLine;
+
+	[SerializeField] private RectTransform _OOBCutOffLine;
 
     [Space]
 
@@ -156,10 +159,7 @@ public class DragController : MonoBehaviour {
         _isDraggingFiles = true;
         _startPos = Input.mousePosition;
 
-        //updateSelectedFileCache();
-
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
-            Debug.Log("Starting file following mouse " + _cachedSelectedFiles[i].name);
             _cachedSelectedFiles[i].startFollowMouse();
         }
     }
@@ -175,12 +175,12 @@ public class DragController : MonoBehaviour {
         }
     }
 
-    public void stopSelectionFollowingMouse() {
+    public void stopSelectionFollowingMouse(PointerEventData pointerEventData) {
         _isDraggingFiles = false;
 
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
-            // TODO: Set to true if released over the desktop or another file (use tags)
-            _cachedSelectedFiles[i].stopFollowMouse(false);
+            bool canSnap = pointerEventData.position.y > _OOBCutOffLine.position.y;
+            _cachedSelectedFiles[i].stopFollowMouse(canSnap);
         }
     }
 
