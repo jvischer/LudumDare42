@@ -10,15 +10,31 @@ public class RecycleBinController : FileController {
 
     public static RecycleBinController RBC;
 
+    public static EventHandler OnRecycleBinFilled;
     public static EventHandler OnRecycleBinDestroyed;
+
+    [SerializeField] private Image _fullnessBar;
+    [SerializeField] private Color _emptyColor;
+    [SerializeField] private Color _fullColor;
 
     private List<FileController> _recycledFiles = new List<FileController>();
     private int _emptiedVirusFileCount;
     private int _emptiedAntivirusFileCount;
 
+    private int _maxCapacity = 1;
+
     protected override void Awake() {
         base.Awake();
         RBC = this;
+
+        _maxCapacity = AppConsts.RECYCLE_BIN_LIMIT_BY_DIFFICULTY[Mathf.Clamp(DataManager.getDifficulty(), 0, AppConsts.RECYCLE_BIN_LIMIT_BY_DIFFICULTY.Length - 1)];
+    }
+
+    protected override void Update() {
+        base.Update();
+
+        _fullnessBar.fillAmount = fullnessMeterPercent;
+        _fullnessBar.color = _emptyColor + (_fullColor - _emptyColor) * fullnessMeterPercent;
     }
 
     public override void tryRestoreContents() {
@@ -64,6 +80,12 @@ public class RecycleBinController : FileController {
                     OnRecycleBinDestroyed.Invoke(this, EventArgs.Empty);
                 }
             }
+
+            if (_recycledFiles.Count >= _maxCapacity) {
+                if (OnRecycleBinFilled != null) {
+                    OnRecycleBinFilled.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
     }
 
@@ -72,9 +94,15 @@ public class RecycleBinController : FileController {
         DesktopSystemManager.DSM.freeUpFile(file);
     }
 
+    public float fullnessMeterPercent {
+        get {
+            return Mathf.Clamp01((float) _recycledFiles.Count / _maxCapacity);
+        }
+    }
+
     public bool canDeleteItems {
         get {
-            return gameObject.activeSelf;
+            return gameObject.activeSelf && _recycledFiles.Count < _maxCapacity;
         }
     }
 

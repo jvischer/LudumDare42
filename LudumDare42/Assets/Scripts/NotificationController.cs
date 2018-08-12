@@ -28,23 +28,31 @@ public class NotificationController : MonoBehaviour {
 
         AntivirusManager.OnAntivirusExecuted += antivirusManager_OnAntivirusExecuted;
         ZipBombManager.OnZipBombKilled += zipBombManager_OnZipBombKilled;
+        RecycleBinController.OnRecycleBinFilled += recycleBinController_OnRecycleBinFilled;
     }
 
     private void antivirusManager_OnAntivirusExecuted(object sender, EventArgs e) {
         _notificationHeaderText.text = AppConsts.NOTIFICATION_ON_ANTIVIRUS_EXECUTED_HEADER;
         _notificationBodyText.text = AppConsts.NOTIFICATION_ON_ANTIVIRUS_EXECUTED_BODY;
 
-        StartCoroutine(handleVirusFoundNotification());
+        StartCoroutine(handleNotificationDisplay());
     }
 
     private void zipBombManager_OnZipBombKilled(object sender, EventArgs e) {
         _notificationHeaderText.text = AppConsts.NOTIFICATION_ON_ZIP_BOMB_KILLED_HEADER;
         _notificationBodyText.text = AppConsts.NOTIFICATION_ON_ZIP_BOMB_KILLED_BODY;
 
-        StartCoroutine(handleVirusFoundNotification());
+        StartCoroutine(handleNotificationDisplay());
     }
 
-    private IEnumerator handleVirusFoundNotification() {
+    private void recycleBinController_OnRecycleBinFilled(object sender, EventArgs e) {
+        _notificationHeaderText.text = AppConsts.NOTIFICATION_ON_RECYCLE_BIN_FILLED_HEADER;
+        _notificationBodyText.text = AppConsts.NOTIFICATION_ON_RECYCLE_BIN_FILLED_BODY;
+
+        StartCoroutine(handleNotificationDisplay());
+    }
+
+    private IEnumerator handleNotificationDisplay() {
         _animator.SetTrigger(_fadeInTrigger);
 
         yield return new WaitForSeconds(_notificationDuration);

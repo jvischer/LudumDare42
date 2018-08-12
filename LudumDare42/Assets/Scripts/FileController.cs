@@ -43,7 +43,7 @@ public class FileController : MonoBehaviour {
         FileSystemManager.FSM.deregisterFile(this);
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (_isFollowingMouse) {
             transform.position = Input.mousePosition;
         }

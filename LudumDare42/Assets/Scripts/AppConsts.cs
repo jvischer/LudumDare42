@@ -5,6 +5,8 @@ using System.Text;
 
 public static class AppConsts {
 
+    public static int[] RECYCLE_BIN_LIMIT_BY_DIFFICULTY = new int[] { 25, 20, 15 };
+
     public const string DATA_DIFFICULTY_KEY = "Diff";
     public const string DATA_AUDIO_KEY = "Audio";
 
@@ -92,5 +94,7 @@ public static class AppConsts {
     public const string NOTIFICATION_ON_ANTIVIRUS_EXECUTED_BODY = "Starting all defense processes.";
     public const string NOTIFICATION_ON_ZIP_BOMB_KILLED_HEADER = "Virus killed!";
     public const string NOTIFICATION_ON_ZIP_BOMB_KILLED_BODY = "All virus processes have been killed.";
+    public const string NOTIFICATION_ON_RECYCLE_BIN_FILLED_HEADER = "Recycle bin is full!";
+    public const string NOTIFICATION_ON_RECYCLE_BIN_FILLED_BODY = "You must empty it before you continue.";
 
 }
