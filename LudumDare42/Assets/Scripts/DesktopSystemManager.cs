@@ -227,10 +227,14 @@ public class DesktopSystemManager : MonoBehaviour {
         // Update the position
         file.transform.position = _desktopIconPlaceholders[desktopIconPlaceholderIndex].position;
 
-        // Free up the previous index and write over it
+        // Free up the previous index
+        _availableIndices.Add(file.desktopPositionIndex);
         _indexIsAvailable[file.desktopPositionIndex] = true;
+
+        // Write over it and reserve the new index
         file.desktopPositionIndex = desktopIconPlaceholderIndex;
-        _indexIsAvailable[desktopIconPlaceholderIndex] = false;
+        _availableIndices.Remove(file.desktopPositionIndex);
+        _indexIsAvailable[file.desktopPositionIndex] = false;
         return true;
     }
 

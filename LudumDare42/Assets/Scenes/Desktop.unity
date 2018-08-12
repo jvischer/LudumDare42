@@ -14693,6 +14693,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acb7d7c466cfa4428678892219c5982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeInTrigger: In
+  _fadeOutTrigger: Out
 --- !u!225 &782686244
 CanvasGroup:
   m_ObjectHideFlags: 0

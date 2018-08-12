@@ -31,7 +31,11 @@ public class StartMenuController : MonoBehaviour {
     }
 
     public void checkStartMenuSearch(string text) {
-
+        switch (text.ToUpper().Replace(" ", "")) {
+            case "CUTTHEPOWERTOTHEBUILDING":
+                powerOff();
+                break;
+        }
     }
 
     public void powerOff() {
