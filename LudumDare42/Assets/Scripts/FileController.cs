@@ -109,6 +109,11 @@ public class FileController : MonoBehaviour {
     public void tryDelete() {
         if (!wasFileDeleted) {
             RecycleBinController.RBC.tryDeleteFile(this);
+
+            // If the file was selected, stop dragging
+            if (LastClickedFile == fileID) {
+                DragController.DC.stopSelectionFollowingMouse();
+            }
         }
     }
 
@@ -145,12 +150,12 @@ public class FileController : MonoBehaviour {
             transform.SetAsLastSibling();
             DragController.DC.startSelectionFollowingMouse();
         } else if (pointerEventData.button == PointerEventData.InputButton.Right) {
-            // Handle rmb
-            if (LastClickedFile != fileID) {
-                // Replace the last clicked file
-                FileSystemManager.FSM.deselectLastClickedFile();
-                LastClickedFile = fileID;
-            }
+            //// Handle rmb
+            //if (LastClickedFile != fileID) {
+            //    // Replace the last clicked file
+            //    FileSystemManager.FSM.deselectLastClickedFile();
+            //    LastClickedFile = fileID;
+            //}
 
             // Open right click options relative to the file based on the file's data
             DropdownController.DC.displayDropdownForFile(this);
@@ -161,7 +166,7 @@ public class FileController : MonoBehaviour {
         PointerEventData pointerEventData = baseEventData as PointerEventData;
 
         if (pointerEventData.button == PointerEventData.InputButton.Left) {
-            DragController.DC.stopSelectionFollowingMouse(pointerEventData);
+            DragController.DC.stopSelectionFollowingMouse();
 
             // If the file was already selected AND is now AND the mouse barely moved
             if (_wasSelectedBeforeClick && _isSelected &&

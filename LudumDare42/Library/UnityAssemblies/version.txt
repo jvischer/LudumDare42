@@ -1,5 +1,5 @@
 2018.1.6f1:3.3.0.0
-StandaloneWindows64
+WebGL
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.AIModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.ARModule.dll
@@ -10,8 +10,6 @@ E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.Au
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.BaselibModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.ClothModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.CloudWebServicesModule.dll
-E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.ClusterInputModule.dll
-E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.CoreModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.CrashReportingModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.DirectorModule.dll
@@ -56,6 +54,7 @@ E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.VR
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.VehiclesModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.VideoModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.WebModule.dll
+E:\Program Files\Unity 2018.1.6f1\Editor\Data\PlaybackEngines\WebGLSupport/Managed/UnityEngine.WebGLModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.WindModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEngine/UnityEngine.XRModule.dll
 E:\Program Files\Unity 2018.1.6f1\Editor\Data\Managed/UnityEditor.dll

@@ -141,8 +141,17 @@ public class DragController : MonoBehaviour {
                 file.tryDelete();
             }
 
-            for (int i = _cachedSelectedFiles.Count - 1; i >= 0; i--) {
-                _cachedSelectedFiles[i].tryDelete();
+            FileController recycleBin = null;
+            for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
+                if (_cachedSelectedFiles[i].fileType == FileController.FileType.RecycleBin) {
+                    recycleBin = _cachedSelectedFiles[i];
+                } else {
+                    _cachedSelectedFiles[i].tryDelete();
+                }
+            }
+
+            if (recycleBin != null) {
+                recycleBin.tryDelete();
             }
         }
 
@@ -175,11 +184,11 @@ public class DragController : MonoBehaviour {
         }
     }
 
-    public void stopSelectionFollowingMouse(PointerEventData pointerEventData) {
+    public void stopSelectionFollowingMouse() {
         _isDraggingFiles = false;
 
         for (int i = 0; i < _cachedSelectedFiles.Count; i++) {
-            bool canSnap = pointerEventData.position.y > _OOBCutOffLine.position.y;
+            bool canSnap = Input.mousePosition.y > _OOBCutOffLine.position.y;
             _cachedSelectedFiles[i].stopFollowMouse(canSnap);
         }
     }
