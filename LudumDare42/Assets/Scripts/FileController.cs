@@ -109,11 +109,6 @@ public class FileController : MonoBehaviour {
     public void tryDelete() {
         if (!wasFileDeleted) {
             RecycleBinController.RBC.tryDeleteFile(this);
-
-            // If the file was selected, stop dragging
-            if (LastClickedFile == fileID) {
-                DragController.DC.stopSelectionFollowingMouse();
-            }
         }
     }
 
@@ -201,10 +196,10 @@ public class FileController : MonoBehaviour {
     }
 
     private void onDoubleClick() {
-        if (fileType == FileType.ZipBomb ||
-            fileType == FileType.Virus) {
-            tryUnzip();
-        }
+        //if (fileType == FileType.ZipBomb ||
+        //    fileType == FileType.Virus) {
+        //    tryUnzip();
+        //}
     }
 
     public void startFollowMouse() {

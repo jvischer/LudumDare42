@@ -93,12 +93,22 @@ public class RecycleBinController : FileController {
                     OnRecycleBinFilled.Invoke(this, EventArgs.Empty);
                 }
             }
+
+            // If the file was selected, stop dragging
+            if (LastClickedFile == fileID) {
+                DragController.DC.stopSelectionFollowingMouse();
+            }
         }
     }
 
     public void tryUnzipFile(FileController file) {
         file.gameObject.SetActive(false);
         DesktopSystemManager.DSM.freeUpFile(file);
+
+        // If the file was selected, stop dragging
+        if (LastClickedFile == fileID) {
+            DragController.DC.stopSelectionFollowingMouse();
+        }
     }
 
     public float fullnessMeterPercent {
